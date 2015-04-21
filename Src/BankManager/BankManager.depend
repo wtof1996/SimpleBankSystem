@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1429581269 source:d:\github\simplebanksystem\src\bankmanager\main.cpp
+
+1429581365 source:d:\github\simplebanksystem\src\bankmanager\view\cli.cpp
+	"cli.hpp"
+	<algorithm>
+
+1429592204 d:\github\simplebanksystem\src\bankmanager\view\cli.hpp
+	<iostream>
+	<string>
+	<boost\regex.hpp>
+	<boost\function.hpp>
+	<initializer_list>
+	<vector>
+	<cstdlib>
+	<exception>
+	<sstream>
+
