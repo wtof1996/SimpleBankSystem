@@ -1,3 +1,7 @@
+/* 
+ * CLI 界面库
+ * 封装了一个简单的基于行模式的CUI
+ */
 #pragma once
 
 //#ifndef CLI_HPP_INCLUDED
@@ -23,12 +27,13 @@ namespace CLI
 	const string MenuInputDirection = "请输入选项,输入完后按回车";
 	const string RetryDirection = "无效输入，请重新输入";
 
+	//菜单项
 	template<typename T>
 	class MenuItem
 	{
 	public:
 		string Name;
-		boost::function<void(T&)> CallBack;
+		boost::function<void(T&)> CallBack; //回调函数，建议使用Lambda构造
 
 		MenuItem<T>() = delete;
 
@@ -38,25 +43,20 @@ namespace CLI
 		~MenuItem<T>() = default;
 	};
 
-	class ListItem
-	{
-	public:
-		string Name;
-		std::vector<string> Data;
-
-		ListItem() = delete;
-
-		ListItem(const string &name, const std::vector<string> &data)
-			:Name(name), Data(data) {}
-
-		~ListItem() = default;
-	};
 
 	void ShowMsg(const string &msg);
+	
 	void ShowBoxMsg(const string &msg, const char border = '*');
+	//显示一个消息框
+	
 	string GetInput(const string &direction);
-	string GetInput(const string &direction, const boost::regex &checker);
+	//这个函数只是简单的读一行
 
+	string GetInput(const string &direction, const boost::regex &checker); 
+	// 读一行的基础上，通过正则表达式checker保证输入数据有效性
+
+	
+	//辅助函数
 	inline int to_number(string &a)
 	{
 		std::stringstream s(a);
@@ -72,7 +72,9 @@ namespace CLI
 		s >> ret;
 		return ret;
 	}
-
+	
+	//根据给定的MenuList显示菜单，并确保调用对应的函数
+	//菜单会绑定到data对象上，不同的选项会调用其中不同的成员函数
 	template<typename T>
 	void ShowMenu(T& data, std::initializer_list<MenuItem<T>> menu, const string &headline)
 	{
@@ -87,7 +89,7 @@ namespace CLI
 
 		size_t input;
 		do{
-			input = to_number(GetInput(MenuInputDirection + "[1-" + std::to_string(menu.size()) + "] : ", 
+			input = to_number(GetInput(MenuInputDirection + "[1-" + std::to_string(menu.size()) + "] : ",
 							  boost::regex("^\\d+")));
 
 		} while (( input <= 0 || input > menu.size() )&& (ShowMsg(RetryDirection), true));
@@ -101,6 +103,8 @@ namespace CLI
 		}
 
 	}
+
+//以下是不同平台下的清屏函数
 #ifdef _WIN32
 	inline void CleanCLI() { system("cls"); }
 #endif

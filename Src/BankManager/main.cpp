@@ -1,4 +1,6 @@
 ﻿#include "View\cli.hpp"
+#include <string>
+#include "Controller\Helper.hpp"
 
 class Test
 {
@@ -15,7 +17,14 @@ public:
 
 	void Hi()
 	{
-		CLI::ShowMsg("Hi");
+		std::string cipher = helper::AES_128_EncryptHex("呵呵");
+		CLI::ShowMsg(cipher);
+		std::string plain = helper::AES_128_DecryptHex(cipher);
+
+
+		CLI::ShowMsg(plain);
+
+		std::cout << plain.size() << std::endl;
 	}
 };
 

@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Lib\Boost_1_58\x64;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Lib\cryptopp\include;D:\Lib\Boost_1_58\x64;$(IncludePath)</IncludePath>
     <ReferencePath>D:\Lib\Boost_1_58\x64;$(ReferencePath)</ReferencePath>
     <SourcePath>D:\Lib\Boost_1_58\x64;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -68,10 +68,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Controller\Helper.cpp" />
+    <ClCompile Include="Controller\md5.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="View\cli.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Controller\Helper.hpp" />
+    <ClInclude Include="Controller\MD5.hpp" />
+    <ClInclude Include="Model\UserModel.hpp" />
     <ClInclude Include="View\cli.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
