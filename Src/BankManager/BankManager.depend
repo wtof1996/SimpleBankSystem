@@ -321,3 +321,119 @@
 	<boost/log/sources/severity_logger.hpp>
 	<boost/log/sources/record_ostream.hpp>
 
+1430060291 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
+	"DataController.hpp"
+	"..\Helper.hpp"
+	<stdexcept>
+	<iostream>
+
+1430064905 i:\c++design\src\bankmanager\controller\datacontroller.hpp
+	<map>
+	<string>
+	<vector>
+	"..\Model\BasicModel.hpp"
+	"..\Model\Config.hpp"
+	"..\Model\UserModel.hpp"
+	<boost\property_tree\ptree.hpp>
+
+1430059700 i:\c++design\src\bankmanager\model\basicmodel.hpp
+	<string>
+	<vector>
+	<boost\date_time\gregorian\gregorian.hpp>
+	<boost\algorithm\string.hpp>
+	<boost\date_time\posix_time\posix_time.hpp>
+	"..\Helper.hpp"
+
+1430041861 i:\c++design\src\bankmanager\helper.hpp
+	<string>
+	<sstream>
+	<vector>
+	<cryptopp\cryptlib.h>
+	<cryptopp\sha.h>
+	<cryptopp\aes.h>
+	<cryptopp\modes.h>
+	<cryptopp\filters.h>
+	<boost\algorithm\string.hpp>
+
+1430041906 i:\c++design\src\bankmanager\model\config.hpp
+	"BasicModel.hpp"
+	"..\Helper.hpp"
+	<vector>
+	<string>
+	<boost\program_options.hpp>
+
+1430057530 i:\c++design\src\bankmanager\model\usermodel.hpp
+	<string>
+	"..\Helper.hpp"
+
+1430063896 source:i:\c++design\src\bankmanager\controller\iocontroller.cpp
+	"IOController.hpp"
+	<string>
+
+1430064420 i:\c++design\src\bankmanager\controller\iocontroller.hpp
+	<boost\filesystem.hpp>
+	<boost\property_tree\ptree.hpp>
+	<boost\property_tree\xml_parser.hpp>
+	"..\View\cli.hpp"
+	"..\Helper.hpp"
+	"..\Model\BasicModel.hpp"
+	"..\Model\UserModel.hpp"
+	"..\Model\Config.hpp"
+	<boost\log\trivial.hpp>
+	"DataController.hpp"
+
+1430060621 source:i:\c++design\src\bankmanager\helper.cpp
+	"Helper.hpp"
+	<array>
+	<iostream>
+	<boost/log/trivial.hpp>
+	<boost/log/expressions.hpp>
+	<boost/log/utility/setup/file.hpp>
+	<boost/log/utility/setup/common_attributes.hpp>
+	<boost/log/sources/severity_logger.hpp>
+	<boost/log/sources/record_ostream.hpp>
+
+1430041902 source:i:\c++design\src\bankmanager\model\config.cpp
+	"Config.hpp"
+	<iostream>
+	<boost\log\trivial.hpp>
+	<boost\filesystem.hpp>
+	<boost\filesystem\fstream.hpp>
+	<stdexcept>
+
+1430045131 source:i:\c++design\src\bankmanager\view\cli.cpp
+	"cli.hpp"
+	<boost\locale.hpp>
+	<algorithm>
+
+1430044948 i:\c++design\src\bankmanager\view\cli.hpp
+	<iostream>
+	<string>
+	<boost\regex.hpp>
+	<boost\function.hpp>
+	<boost\log\trivial.hpp>
+	<initializer_list>
+	<vector>
+	<cstdlib>
+	<exception>
+	<sstream>
+
+1430059773 source:i:\c++design\src\bankmanager\main.cpp
+	<stdexcept>
+	<string>
+	<vector>
+	"View\cli.hpp"
+	"Helper.hpp"
+	"Model\BasicModel.hpp"
+	"Model\UserModel.hpp"
+	"Model\Config.hpp"
+	<boost\log\trivial.hpp>
+	<boost\scope_exit.hpp>
+	<boost\property_tree\ptree.hpp>
+	<boost\property_tree\xml_parser.hpp>
+	<boost\algorithm\string.hpp>
+	<clocale>
+	<windows.h>
+	"Controller\DataController.hpp"
+	<boost/locale.hpp>
+

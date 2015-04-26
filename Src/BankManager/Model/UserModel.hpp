@@ -29,6 +29,7 @@ namespace model
 
 		User(const string &name = "", const string &pwd = "")
 			:Name(name), PasswordHash(pwd) { }
+        virtual ~User() = default;
 	};
 
 	class BankTeller : public User

@@ -26,6 +26,7 @@
 					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_program_options-mgw49-mt-s-1_58.a" />
 					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_system-mgw49-mt-s-1_58.a" />
 					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_thread-mgw49-mt-sd-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_locale-mgw49-mt-s-1_58.a" />
 					<Add library="D:/Lib/cryptopp/x64/libcryptopp.a" />
 				</Linker>
 			</Target>
@@ -35,13 +36,22 @@
 				<Option type="1" />
 				<Option compiler="gnu_gcc_compiler_x64" />
 				<Compiler>
-					<Add option="-O2" />
-					<Add directory="D:/Lib/crytopp/include" />
+					<Add option="-O3" />
+					<Add directory="D:/Lib/cryptopp/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="D:/Lib/crytopp/x64/libcryptopp.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_log_setup-mgw49-mt-s-1_58.a" />
 					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_regex-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_log-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_date_time-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_exception-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_filesystem-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_locale-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_thread-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_program_options-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_system-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/cryptopp/x64/libcryptopp.a" />
 				</Linker>
 			</Target>
 		</Build>

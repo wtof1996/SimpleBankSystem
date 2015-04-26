@@ -1,12 +1,28 @@
 #include "cli.hpp"
+
+#ifdef CONV_UTF8_GBK
+#include <boost\locale.hpp>
+#endif // CONV_UTF8_GBK
+
 #include <algorithm>
+
+inline std::string convert(const std::string &s)
+{
+
+#ifdef CONV_UTF8_GBK
+    return boost::locale::conv::from_utf(s, "GBK" );
+#else
+    return s;
+#endif // CONV_UTF8_GBK
+}
 
 namespace CLI
 {
 	void ShowMsg(const string &msg)
 	{
 		cout.clear();
-		cout << msg << endl;
+
+		cout << convert(msg) << endl;
 	}
 
 	void ShowBoxMsg(const string &msg, const char border)
@@ -16,7 +32,7 @@ namespace CLI
 		ShowMsg(string(msg.size() + 8, border));
 	}
 
-	
+
 	string GetInput(const string &direction)
 	{
 		ShowMsg(direction);
@@ -38,7 +54,7 @@ namespace CLI
 		return input;
 	}
 
-	int ShowChooseList(const string &msg, std::initializer_list<string> list)
+	size_t ShowChooseList(const string &msg, std::initializer_list<string> list)
 	{
 		ShowMsg(msg);
 		BOOST_LOG_TRIVIAL(info) << "ChooseList Showed";
@@ -49,7 +65,7 @@ namespace CLI
 
 		size_t index = 0;
 		for (auto &i : list) {
-			cout << "[" << ++index << "] : " << i << endl;
+			cout << "[" << ++index << "] : " << convert(i) << endl;
 
 			BOOST_LOG_TRIVIAL(debug) << "Item Index:" << index - 1;
 			BOOST_LOG_TRIVIAL(debug) << "Item Name:" << i;
@@ -63,5 +79,7 @@ namespace CLI
 		} while ((input <= 0 || input > list.size()) && (ShowMsg(RetryDirection), true));
 
 		BOOST_LOG_TRIVIAL(info) << "User choosed No." << input;
+
+		return input;
 	}
 }

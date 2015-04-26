@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<User>
+	<Administrators>
+		<Administrator>admin|d033e22ae348aeb5660fc2140aec35850c4da997</Administrator>
+	</Administrators>
+	<BankTellers>
+		<BankTeller>teller1|762643fa2aadd59d1b55c8e7a4ab0b5ac513ff64</BankTeller>
+		<BankTeller>teller2|44892727efa7d66fb5a617e7aedbc95b071dd0bb</BankTeller>
+	</BankTellers>
+</User>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LogicConfig>
+	<DepositList>
+		<Deposit>一年|2.750000|12</Deposit>
+		<Deposit>三个月|2.350000|3</Deposit>
+		<Deposit>三年|3.750000|36</Deposit>
+		<Deposit>二年|3.250000|24</Deposit>
+		<Deposit>五年|4.000000|60</Deposit>
+		<Deposit>半年|2.550000|6</Deposit>
+		<Deposit>活期|0.350000|2147483646</Deposit>
+	</DepositList>
+	<ForeignExchangeList>
+		<ForeignExchange>澳元|AUD|4.774000</ForeignExchange>
+		<ForeignExchange>加拿大元|CAD|5.045000</ForeignExchange>
+		<ForeignExchange>欧元|EUR|6.638000</ForeignExchange>
+		<ForeignExchange>英镑|GBP|9.236600</ForeignExchange>
+		<ForeignExchange>港币|HKD|0.790210</ForeignExchange>
+		<ForeignExchange>日元|JPY|0.051380</ForeignExchange>
+		<ForeignExchange>新西兰元|NZD|4.655600</ForeignExchange>
+		<ForeignExchange>卢布|RUB|0.120600</ForeignExchange>
+		<ForeignExchange>新加坡元|SGD|4.578300</ForeignExchange>
+		<ForeignExchange>美元|USD|6.124100</ForeignExchange>
+	</ForeignExchangeList>
+</LogicConfig>

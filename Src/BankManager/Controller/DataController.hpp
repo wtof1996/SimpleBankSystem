@@ -16,55 +16,61 @@ namespace controller
 	using std::string;
 	using boost::property_tree::ptree;
 
-	const string DepositListPath = "DepositList.Deposit";
-	const string ForeignExchangeListPath = "ForeignExchangeList.ForeignExchange";
-	const string BankTellerListPath = "User.BankTellers.BankTeller";
-	const string AdministratorListPath = "User.Administrators.Administrator";
-	const string TotalRecordPath = "Records.Record";
-	const string AccountListPath = "AccountList.Account";
+	const string DepositListRoot = "DepositList"
+		, DepositListPath = DepositListRoot + ".Deposit"
+		, ForeignExchangeListRoot = "ForeignExchangeList"
+		, ForeignExchangeListPath = ForeignExchangeListRoot + ".ForeignExchange"
+		, BankTellerListRoot = "BankTellers"
+		, BankTellerListPath = BankTellerListRoot + ".BankTeller"
+		, AdministratorListRoot = "Administrators"
+		, AdministratorListPath = AdministratorListRoot + ".Administrator"
+		, TotalRecordRoot = "Records"
+		, TotalRecordPath = TotalRecordRoot + ".Record"
+		, AccountListRoot = "AccountList"
+		, AccountListPath = AccountListRoot + ".Account"
+		, AccountListCAPath = AccountListPath + ".CurrencyAccount";
+
 	class DataController
 	{
-	public:
-		std::map < string, model::Administrator > AdministratorList; //¹ÜÀíÔ±ÁĞ±í
-		std::map < string, model::BankTeller > BankTellerList;		//¹ñÔ±ÁĞ±í
-		std::map < string, model::ForeignExchange > ForeignExchangeList; //Íâ»ã»ãÂÊÁĞ±í
-		std::map < string, model::Deposit > DepositList;				 //´æ¿îÒµÎñÁĞ±í
-		std::map < string, model::Account > AccountList;				 //ÕË»§ÁĞ±í
-		std::map < string, std::vector<model::Record> > RecordByAccount; //°´ÕË»§´æ´¢µÄ½»Ò×¼ÇÂ¼
-		std::vector<model::Record> TotalRecord;							//×Ü½»Ò×¼ÇÂ¼
+	private:
+		std::map < string, model::Administrator > AdministratorList; //ç®¡ç†å‘˜åˆ—è¡¨
+		std::map < string, model::BankTeller > BankTellerList;		//æŸœå‘˜åˆ—è¡¨
+		std::map < string, model::ForeignExchange > ForeignExchangeList; //å¤–æ±‡æ±‡ç‡åˆ—è¡¨
+		std::map < string, model::Deposit > DepositList;				 //å­˜æ¬¾ä¸šåŠ¡åˆ—è¡¨
+		std::map < string, model::Account > AccountList;				 //è´¦æˆ·åˆ—è¡¨
+		std::map < string, std::vector<model::Record> > RecordByAccount; //æŒ‰è´¦æˆ·å­˜å‚¨çš„äº¤æ˜“è®°å½•
+		std::vector<model::Record> TotalRecord;							//æ€»äº¤æ˜“è®°å½•
 	public:
 		DataController() = default;
 		~DataController() = default;
 
-
-
-		bool VerifyUser(string name, string password);
-		bool VerifyAccount(string number, string password);
-		model::User& GetUser(string name);
+		bool VerifyUser(const string& name, const string& password) const;
+		bool VerifyAccount(const string& number, const string& password) const;
+		const model::User& GetUser(const string& name) const;
 		void UpdateUser(model::User &u);
 
-		ptree GetForeignExchangePtree();
-		ptree GetDepositListPtree();
-		ptree GetAccountListPtree();
-		ptree GetBankTellerListPtree();
-		ptree GetTotalRecordPtree();
+		ptree GetForeignExchangePtree() const;
+		ptree GetDepositListPtree() const;
+		ptree GetAccountListPtree() const;
+		ptree GetBankTellerListPtree() const;
+		ptree GetTotalRecordPtree() const;
 
-		const decltype(AccountList)& GetAccountList() { return AccountList; }
-		const decltype(BankTellerList)& GetBankTellerList() { return BankTellerList; }
-		const decltype(ForeignExchangeList)& GetForeignExchangeList() { return ForeignExchangeList; }
-		const decltype(DepositList)& GetDepositList() { return DepositList; }
-		const decltype(TotalRecord)& GetTotalRecord() { return TotalRecord; }
+		const decltype(AccountList)& GetAccountList() const { return AccountList; }
+		const decltype(BankTellerList)& GetBankTellerList() const { return BankTellerList; }
+		const decltype(ForeignExchangeList)& GetForeignExchangeList() const { return ForeignExchangeList; }
+		const decltype(DepositList)& GetDepositList() const { return DepositList; }
+		const decltype(TotalRecord)& GetTotalRecord() const { return TotalRecord; }
 
-
-
-		std::vector<model::Record>& GetAccountRecord(const string& number);
-		double GetForeignExchangeRate(const string& code);
-		model::Deposit GetDeposit(const string& name);
+		const std::vector<model::Record>& GetAccountRecord(const string& number) const;
+		const model::Account& GetAccount(const string& number) const;
+		double GetForeignExchangeRate(const string& code) const;
+		const model::Deposit GetDeposit(const string& name) const;
 
 		void SetForeignExchangeRateList(const ptree& XMLtree);
 		void SetDepositList(const ptree& XMLtree);
 		void SetTotalRecord(const ptree& XMLtree);
-		void SetUserList(const ptree& adminTree, const ptree& tellerTree);
+		void SetUserList(const ptree& XMLtree);
+		void SetAccountList(const ptree& XMLtree);
 		void UpdateAccount(const model::Account& account, const std::vector<model::Record>& record);
 		void UpdateForeignExchangeRate(const string& code, const model::ForeignExchange& fex);
 	};

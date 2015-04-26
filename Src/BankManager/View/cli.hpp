@@ -1,4 +1,4 @@
-/* 
+/*
  * CLI 界面库
  * 封装了一个简单的基于行模式的CUI
  */
@@ -17,6 +17,8 @@
 #include <cstdlib>
 #include <exception>
 #include <sstream>
+
+#define CONV_UTF8_GBK
 
 namespace CLI
 {
@@ -46,20 +48,20 @@ namespace CLI
 
 
 	void ShowMsg(const string &msg);
-	
+
 	void ShowBoxMsg(const string &msg, const char border = '*');
 	//显示一个消息框
 
-	int ShowChooseList(const string &msg, std::initializer_list<string> list);
+	size_t ShowChooseList(const string &msg, std::initializer_list<string> list);
 	//显示一个选择列表
-	
+
 	string GetInput(const string &direction);
 	//这个函数只是简单的读一行
 
-	string GetInput(const string &direction, const boost::regex &checker); 
+	string GetInput(const string &direction, const boost::regex &checker);
 	// 读一行的基础上，通过正则表达式checker保证输入数据有效性
 
-	
+
 	//辅助函数
 	inline int to_number(string &a)
 	{
@@ -76,7 +78,7 @@ namespace CLI
 		s >> ret;
 		return ret;
 	}
-	
+
 	//根据给定的MenuList显示菜单，并确保调用对应的函数
 	//菜单会绑定到data对象上，不同的选项会调用其中不同的成员函数
 	template<typename T>

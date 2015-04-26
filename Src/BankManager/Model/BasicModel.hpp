@@ -17,7 +17,23 @@ namespace model
 	using helper::SplitModelString;
 	using helper::CombineString;
 
-	class Currency
+	class BasicModel
+	{
+	public:
+		BasicModel() = default;
+		virtual ~BasicModel() = default;
+		virtual void FromString(const string&) = 0;
+		virtual string ToString() = 0;
+		BasicModel(const string& serial)
+		{
+			this->FromString(serial);
+		}
+
+		
+
+	};
+
+	class Currency : public BasicModel
 	{
 	public:
 
@@ -27,6 +43,8 @@ namespace model
 
 		Currency(string name = "", string code = "", double amount = NAN)
 			:Name(name), Code(code), Amount(amount) {}
+
+		using BasicModel::BasicModel;
 
 		Currency(const Currency &) = default;
 		Currency& operator= (const Currency&) = default;
@@ -43,7 +61,7 @@ namespace model
 
 	static const Currency MainCurrency = Currency("人民币", "CNY");
 
-	class ForeignExchange
+	class ForeignExchange : public BasicModel
 	{
 	public:
 		string Name;
@@ -52,6 +70,8 @@ namespace model
 
 		ForeignExchange(string name = "", string code = "", double rate = NAN)
 			:Name(name), Code(code), Rate(rate) { }
+
+		using BasicModel::BasicModel;
 
 		ForeignExchange(const ForeignExchange &) = default;
 		ForeignExchange& operator= (const ForeignExchange&) = default;
@@ -66,7 +86,7 @@ namespace model
 		string ToString() { return CombineString(Name, Code, std::to_string(Rate)); }
 	};
 
-	class Deposit
+	class Deposit : public BasicModel
 	{
 	public:
 		string Name;
@@ -75,6 +95,8 @@ namespace model
 
 		Deposit(string name = "", double rate = NAN, decltype(Duration) duration = boost::date_time::not_a_date_time)
 			:Name(name), IRPerYear(rate), Duration(duration) { }
+		
+		using BasicModel::BasicModel;
 
 		Deposit(const Deposit &) = default;
 		Deposit& operator= (const Deposit&) = default;
@@ -90,7 +112,7 @@ namespace model
 							std::to_string(Duration.number_of_months().as_number())); }
 	};
 
-	class CurrencyAccount
+	class CurrencyAccount : public BasicModel
 	{
 	public:
 		Currency Currency;
@@ -101,6 +123,12 @@ namespace model
 		CurrencyAccount()
 			:Period(boost::gregorian::date(boost::date_time::not_a_date_time), boost::gregorian::date(boost::date_time::not_a_date_time))
 		{
+		}
+
+		CurrencyAccount(const string &serial)
+			:CurrencyAccount()
+		{
+			this->FromString(serial);
 		}
 
 		CurrencyAccount(const CurrencyAccount &) = default;
@@ -126,7 +154,7 @@ namespace model
 
 	};
 
-	class Account
+	class Account : public BasicModel
 	{
 	public:
 		string Number;
@@ -136,6 +164,8 @@ namespace model
 
 		Account(string number = "", string name = "", string pwd = "", decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
 			: Number(number), Name(name), PasswordHash(pwd), CurrencyAccountList(list) { }
+
+		using BasicModel::BasicModel;
 
 		Account(const Account &) = default;
 		Account& operator= (const Account&) = default;
@@ -151,7 +181,7 @@ namespace model
 
 	};
 
-	class Record
+	class Record : public BasicModel
 	{
 	public:
 		string Number;
@@ -160,13 +190,16 @@ namespace model
 		Currency Currency;
 		boost::posix_time::ptime Time;
 
+		Record(string number, string name, string src, model::Currency cur, boost::posix_time::ptime time = boost::posix_time::not_a_date_time)
+			:Number(number), Name(name), Source(src), Currency(cur), Time(time) { }
+
+		using BasicModel::BasicModel;
 		Record() = default;
 		Record(const Record &) = default;
 		Record& operator= (const Record&) = default;
 		~Record() = default;
 
-		Record(string number, string name, string src, model::Currency cur, boost::posix_time::ptime time = boost::posix_time::not_a_date_time)
-			:Number(number), Name(name), Source(src), Currency(cur), Time(time) { }
+
 		bool operator < (const Record &rhs)
 		{
 			return this->Time < rhs.Time;

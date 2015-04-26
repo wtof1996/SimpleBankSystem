@@ -1,4 +1,4 @@
-﻿#include <stdexcept>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include "View\cli.hpp"
@@ -8,9 +8,8 @@
 #include "Model\Config.hpp"
 #include <boost\log\trivial.hpp>
 #include <boost\scope_exit.hpp>
-#include <boost\property_tree\ptree.hpp>
-#include <boost\property_tree\xml_parser.hpp>
-#include <boost\algorithm\string.hpp>
+#include <clocale>
+#include <windows.h>
 #include "Controller\DataController.hpp"
 
 using std::string;
@@ -18,9 +17,7 @@ using std::string;
 using namespace boost::property_tree;
 using namespace std;
 
-
 const string WelcomeInfo = "欢迎使用银行业务系统!";
-
 void Test();
 
 int main(int argc, char* argv[])
@@ -28,7 +25,11 @@ int main(int argc, char* argv[])
 
 try
 {
-    helper::InitLog();
+	//setlocale(LC_ALL, "");
+
+	helper::InitLog();
+
+
 
 	BOOST_LOG_TRIVIAL(info) << "Program Start";
 
@@ -77,44 +78,80 @@ void Test()
    cout << lists[1].ToString() << endl;*/
 
 	controller::DataController d;
+	/*
 
 	d.AdministratorList["admin"] = Administrator("admin", SHA1("admin"));
 	d.BankTellerList["teller1"] = BankTeller("teller1", SHA1("teller1"));
 	d.BankTellerList["teller2"] = BankTeller("teller2", SHA1("teller2"));
 
-	d.ForeignExchangeList["USD"] = ForeignExchange(string("美元"), string("USD"), 6.1290);
-	d.ForeignExchangeList["USD"] = ForeignExchange(string("英镑"), string("GBP"), 9.1645);
+	d.ForeignExchangeList["USD"] = ForeignExchange(string("美元"), string("USD"), 6.1241);
+	d.ForeignExchangeList["EUR"] = ForeignExchange(string("欧元"), string("EUR"), 6.6380);
+	d.ForeignExchangeList["JPY"] = ForeignExchange(string("日元"), string("JPY"), 0.051380);
+	d.ForeignExchangeList["HKD"] = ForeignExchange(string("港币"), string("HKD"), 0.79021);
+	d.ForeignExchangeList["GBP"] = ForeignExchange(string("英镑"), string("GBP"), 9.2366);
+	d.ForeignExchangeList["AUD"] = ForeignExchange(string("澳元"), string("AUD"), 4.7740);
+	d.ForeignExchangeList["NZD"] = ForeignExchange(string("新西兰元"), string("NZD"), 4.6556);
+	d.ForeignExchangeList["SGD"] = ForeignExchange(string("新加坡元"), string("SGD"), 4.5783);
+	d.ForeignExchangeList["CAD"] = ForeignExchange(string("加拿大元"), string("CAD"), 5.0450);
+	d.ForeignExchangeList["RUB"] = ForeignExchange(string("卢布"), string("RUB"), 0.1206);
 
 	d.DepositList["活期"] = Deposit(string("活期"), 0.35);
+	d.DepositList["三个月"] = Deposit(string("三个月"), 2.35, boost::gregorian::months(3));
+	d.DepositList["半年"] = Deposit(string("半年"), 2.55, boost::gregorian::months(6));
+	d.DepositList["一年"] = Deposit(string("一年"), 2.75, boost::gregorian::months(12));
+	d.DepositList["二年"] = Deposit(string("二年"), 3.25, boost::gregorian::months(24));
+	d.DepositList["三年"] = Deposit(string("三年"), 3.75, boost::gregorian::months(36));
+	d.DepositList["五年"] = Deposit(string("五年"), 4.00, boost::gregorian::months(60));
 
-	d.AccountList["123456789"] = Account(string("123456789"), string("冯懿宣"), string(SHA1("123456")));
+
+
+	d.AccountList["12345678"] = Account(string("12345678"), string("冯懿宣"), string(SHA1("123456")));
 	auto ca = CurrencyAccount();
 	ca.Currency = MainCurrency;
 	ca.Currency.Amount = 100000.00;
 	ca.DespoitType = d.DepositList["活期"];
 	ca.Period = boost::gregorian::date_period(
-		boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423")),
-		boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423"))
-		);
-	ca.LastUpdateDate = boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423"));
+	boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423")),
+	boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423"))
+	);
+	ca.LastUpdateDate = boost::gregorian::date(boost::gregorian::from_undelimited_string("20140424"));
 
 	d.AccountList["12345678"].CurrencyAccountList.push_back(ca);
 
 	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency, boost::posix_time::ptime(ca.LastUpdateDate)));
 
-
-	ptree pt, pt2 = d.GetBankTellerListPtree();
+	ptree pt;
+	ptree pt2 = d.GetDepositListPtree(), pt3 = d.GetForeignExchangePtree();
 	xml_writer_settings<string> settings('\t', 1);
 
-	for (auto &i : d.AdministratorList){
-		pt.add(AdministratorListPath, i.second.ToString());
-	}
+	auto child = pt2.get_child(DepositListRoot);
 
-    auto child = pt2.get_child("User.BankTellers");
 	for(auto &i : child){
-        pt.add(BankTellerListPath, i.second.get_value<string>());
+	pt.add("LogicConfig." + DepositListPath, i.second.get_value<string>());
 	}
 
-	write_xml(Config::get().GetUserDataPath(), pt, std::locale(), settings);
+	auto child2 = pt3.get_child(ForeignExchangeListRoot);
+	for (auto &i : child2) {
+	pt.add("LogicConfig." + ForeignExchangeListPath, i.second.get_value<string>());
+	}
 
+
+	write_xml(Config::get().GetLogicConfigPath(), pt, std::locale(), settings);
+
+	*/
+
+	//ptree pt;
+	//read_xml(Config::get().GetLogicConfigPath(), pt);
+	//
+	//auto child = pt.get_child("LogicConfig");
+	////xml_writer_settings<string> settings('\t', 1);
+	////write_xml("123.xml", child, std::locale(), settings);
+	////CLI::ShowMsg(child.begin()->first);
+	//
+	//d.SetDepositList(child);
+	//////
+	//d.SetForeignExchangeRateList(child);
+	//////
+	//CLI::ShowMsg(d.GetDeposit("活期").Name);
+	//CLI::ShowMsg(to_string(d.GetForeignExchangeRate("USD")));
 }

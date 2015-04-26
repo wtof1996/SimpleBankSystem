@@ -71,7 +71,10 @@ namespace helper
 	}
 
 	string AES_128_EncryptHex(const string &plain, const string &key, const string &iv)
-	{
+	{	
+#ifdef NO_AES
+		return plain;
+#endif
 		byte bkey[CryptoPP::AES::DEFAULT_KEYLENGTH], biv[CryptoPP::AES::BLOCKSIZE];
 
 		for (size_t i = 0; i < CryptoPP::AES::DEFAULT_KEYLENGTH; ++i) bkey[i] = key[i];
@@ -96,7 +99,11 @@ namespace helper
 	}
 
 	string AES_128_DecryptHex(const string &cipherHex, const string &key, const string &iv)
-	{
+	{	
+
+#ifdef NO_AES
+		return cipherHex;
+#endif
 		byte bkey[CryptoPP::AES::DEFAULT_KEYLENGTH], biv[CryptoPP::AES::BLOCKSIZE];
 
 		for (size_t i = 0; i < CryptoPP::AES::DEFAULT_KEYLENGTH; ++i) bkey[i] = key[i];
@@ -123,7 +130,7 @@ namespace helper
 	{
 		boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
 		boost::log::add_file_log(
-			boost::log::keywords::file_name = ".\\logs\\sign_%Y-%m-%d_%H-%M-%S.%N.log",
+			boost::log::keywords::file_name = ".\\logs\\%Y-%m-%d_%H-%M-%S.%N.log",
 			boost::log::keywords::format = "[%TimeStamp%] (%Severity%) : %Message%"
 			);
 		boost::log::add_common_attributes();
