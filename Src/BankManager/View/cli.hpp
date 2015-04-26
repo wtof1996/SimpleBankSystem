@@ -11,6 +11,7 @@
 #include <string>
 #include <boost\regex.hpp>
 #include <boost\function.hpp>
+#include <boost\log\trivial.hpp>
 #include <initializer_list>
 #include <vector>
 #include <cstdlib>
@@ -48,6 +49,9 @@ namespace CLI
 	
 	void ShowBoxMsg(const string &msg, const char border = '*');
 	//显示一个消息框
+
+	int ShowChooseList(const string &msg, std::initializer_list<string> list);
+	//显示一个选择列表
 	
 	string GetInput(const string &direction);
 	//这个函数只是简单的读一行
@@ -78,6 +82,9 @@ namespace CLI
 	template<typename T>
 	void ShowMenu(T& data, std::initializer_list<MenuItem<T>> menu, const string &headline)
 	{
+		BOOST_LOG_TRIVIAL(info) << "Menu Showed";
+		BOOST_LOG_TRIVIAL(info) << "HeadLine is:" << headline;
+
 		ShowBoxMsg(headline);
 
 		cout << endl;
@@ -85,6 +92,9 @@ namespace CLI
 		size_t index = 0;
 		for (auto &i : menu) {
 			cout << "[" << ++index << "] : " << i.Name << endl;
+
+			BOOST_LOG_TRIVIAL(debug) << "Item Index:" << index - 1;
+			BOOST_LOG_TRIVIAL(debug) << "Item Name:" << i.Name;
 		}
 
 		size_t input;
@@ -93,6 +103,8 @@ namespace CLI
 							  boost::regex("^\\d+")));
 
 		} while (( input <= 0 || input > menu.size() )&& (ShowMsg(RetryDirection), true));
+
+		BOOST_LOG_TRIVIAL(info) << "User choosed No." << input;
 
 		index = 0;
 		for (auto &i : menu) {

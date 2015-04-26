@@ -1,31 +1,50 @@
 # depslib dependency file v1.0
-1429618865 source:d:\github\simplebanksystem\src\bankmanager\main.cpp
+1429728347 source:d:\github\simplebanksystem\src\bankmanager\main.cpp
 	<string>
-	"Controller\Helper.hpp"
+	<vector>
+	"View\cli.hpp"
+	"Helper.hpp"
+	"Model\BasicModel.hpp"
+	"Model\UserModel.hpp"
+	"Model\Config.hpp"
+	<boost\log\trivial.hpp>
+	<boost\scope_exit.hpp>
+	<boost\property_tree\ptree.hpp>
+	<boost\property_tree\xml_parser.hpp>
+	<boost\algorithm\string.hpp>
+	"Controller\DataController.hpp"
 
-1429581365 source:d:\github\simplebanksystem\src\bankmanager\view\cli.cpp
+1429696191 source:d:\github\simplebanksystem\src\bankmanager\view\cli.cpp
 	"cli.hpp"
 	<algorithm>
 
-1429593492 d:\github\simplebanksystem\src\bankmanager\view\cli.hpp
+1429696038 d:\github\simplebanksystem\src\bankmanager\view\cli.hpp
 	<iostream>
 	<string>
 	<boost\regex.hpp>
 	<boost\function.hpp>
+	<boost\log\trivial.hpp>
 	<initializer_list>
 	<vector>
 	<cstdlib>
 	<exception>
 	<sstream>
 
-1429618836 source:d:\github\simplebanksystem\src\bankmanager\controller\helper.cpp
+1429690600 source:d:\github\simplebanksystem\src\bankmanager\controller\helper.cpp
 	"Helper.hpp"
 	<array>
 	<iostream>
+	<boost/log/trivial.hpp>
+	<boost/log/expressions.hpp>
+	<boost/log/utility/setup/file.hpp>
+	<boost/log/utility/setup/common_attributes.hpp>
+	<boost/log/sources/severity_logger.hpp>
+	<boost/log/sources/record_ostream.hpp>
 
-1429621074 d:\github\simplebanksystem\src\bankmanager\controller\helper.hpp
+1429717230 d:\github\simplebanksystem\src\bankmanager\controller\helper.hpp
 	<string>
 	<sstream>
+	<vector>
 	<cryptopp\cryptlib.h>
 	<cryptopp\sha.h>
 	<cryptopp\aes.h>
@@ -233,4 +252,72 @@
 
 1361345454 d:\lib\cryptopp\include\cryptopp\queue.h
 	"simple.h"
+
+1429726610 d:\github\simplebanksystem\src\bankmanager\model\basicmodel.hpp
+	<string>
+	<vector>
+	<boost\date_time\gregorian\gregorian.hpp>
+	<boost\algorithm\string.hpp>
+	<boost\date_time\posix_time\posix_time.hpp>
+	"..\Helper.hpp"
+
+1429717747 d:\github\simplebanksystem\src\bankmanager\model\config.hpp
+	"BasicModel.hpp"
+	"..\Helper.hpp"
+	<vector>
+	<string>
+	<boost\program_options.hpp>
+
+1429693282 source:d:\github\simplebanksystem\src\bankmanager\model\config.cpp
+	"Config.hpp"
+	<iostream>
+	<boost\log\trivial.hpp>
+	<boost\filesystem.hpp>
+	<boost\filesystem\fstream.hpp>
+	<stdexcept>
+
+1429724986 source:d:\github\simplebanksystem\src\bankmanager\controller\datacontroller.cpp
+	"DataController.hpp"
+	"..\Helper.hpp"
+
+1429727638 d:\github\simplebanksystem\src\bankmanager\controller\datacontroller.hpp
+	<map>
+	<string>
+	<vector>
+	"..\Model\BasicModel.hpp"
+	"..\Model\Config.hpp"
+	"..\Model\UserModel.hpp"
+	<boost\property_tree\ptree.hpp>
+
+1429717899 d:\github\simplebanksystem\src\bankmanager\model\usermodel.hpp
+	<string>
+	"..\Helper.hpp"
+
+1429693656 source:d:\github\simplebanksystem\src\bankmanager\controller\iocontroller.cpp
+	"IOController.hpp"
+
+1429705717 d:\github\simplebanksystem\src\bankmanager\controller\iocontroller.hpp
+	<boost\filesystem.hpp>
+
+1429717474 d:\github\simplebanksystem\src\bankmanager\helper.hpp
+	<string>
+	<sstream>
+	<vector>
+	<cryptopp\cryptlib.h>
+	<cryptopp\sha.h>
+	<cryptopp\aes.h>
+	<cryptopp\modes.h>
+	<cryptopp\filters.h>
+	<boost\algorithm\string.hpp>
+
+1429690600 source:d:\github\simplebanksystem\src\bankmanager\helper.cpp
+	"Helper.hpp"
+	<array>
+	<iostream>
+	<boost/log/trivial.hpp>
+	<boost/log/expressions.hpp>
+	<boost/log/utility/setup/file.hpp>
+	<boost/log/utility/setup/common_attributes.hpp>
+	<boost/log/sources/severity_logger.hpp>
+	<boost/log/sources/record_ostream.hpp>
 

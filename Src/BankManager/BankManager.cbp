@@ -5,6 +5,7 @@
 		<Option title="BankManager" />
 		<Option pch_mode="2" />
 		<Option compiler="gnu_gcc_compiler_x64" />
+		<Option virtualFolders="Model\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/BankManager" prefix_auto="1" extension_auto="1" />
@@ -16,7 +17,15 @@
 					<Add directory="D:/Lib/cryptopp/include" />
 				</Compiler>
 				<Linker>
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_log_setup-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_log-mgw49-mt-s-1_58.a" />
 					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_regex-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_date_time-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_exception-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_filesystem-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_program_options-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_system-mgw49-mt-s-1_58.a" />
+					<Add library="D:/Lib/Boost_1_58/x64/lib/libboost_thread-mgw49-mt-sd-1_58.a" />
 					<Add library="D:/Lib/cryptopp/x64/libcryptopp.a" />
 				</Linker>
 			</Target>
@@ -39,8 +48,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Controller/Helper.cpp" />
-		<Unit filename="Controller/Helper.hpp" />
+		<Unit filename="Controller/DataController.cpp" />
+		<Unit filename="Controller/DataController.hpp" />
+		<Unit filename="Controller/IOController.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="Controller/IOController.hpp" />
+		<Unit filename="Helper.cpp" />
+		<Unit filename="Helper.hpp" />
+		<Unit filename="Model/BasicModel.hpp" />
+		<Unit filename="Model/Config.cpp" />
+		<Unit filename="Model/Config.hpp" />
 		<Unit filename="Model/UserModel.hpp" />
 		<Unit filename="View/cli.cpp" />
 		<Unit filename="View/cli.hpp" />

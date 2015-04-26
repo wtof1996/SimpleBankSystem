@@ -3,6 +3,14 @@
 #include <array>
 #include <iostream>
 
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
+
+
 const std::array<std::string, 256> uCharHexTable =
 { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b",
   "0c", "0d", "0e", "0f", "10", "11", "12", "13", "14", "15", "16", "17",
@@ -109,6 +117,18 @@ namespace helper
 		sftDecypter.MessageEnd();
 
 		return plainText;
+	}
+
+    void InitLog()
+	{
+		boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
+		boost::log::add_file_log(
+			boost::log::keywords::file_name = ".\\logs\\sign_%Y-%m-%d_%H-%M-%S.%N.log",
+			boost::log::keywords::format = "[%TimeStamp%] (%Severity%) : %Message%"
+			);
+		boost::log::add_common_attributes();
+
+		BOOST_LOG_TRIVIAL(info) << "Log Start";
 	}
 
 }

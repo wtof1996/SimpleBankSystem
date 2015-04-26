@@ -24,7 +24,16 @@
     <ClCompile Include="Controller\md5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Controller\Helper.cpp">
+    <ClCompile Include="Model\Config.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\IOController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\DataController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +47,19 @@
     <ClInclude Include="Controller\MD5.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Controller\Helper.hpp">
+    <ClInclude Include="Model\Config.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\BasicModel.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\IOController.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\DataController.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

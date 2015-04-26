@@ -2,6 +2,7 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -17,11 +18,14 @@
 #include <cryptopp\aes.h>
 #include <cryptopp\modes.h>
 #include <cryptopp\filters.h>
+#include <boost\algorithm\string.hpp>
 
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
+
+
 
 //#ifndef HELPER_HPP_INCLUDED
 //#define HELPER_HPP_INCLUDED
@@ -36,6 +40,28 @@ namespace helper
 	string SHA1(const string &msg);
 	string AES_128_EncryptHex(const string &plain, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
 	string AES_128_DecryptHex(const string &cipherHex, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
+
+	void InitLog();
+
+	inline std::vector<string> SplitModelString(const string &str)
+	{
+		std::vector<string> t;
+		boost::split(t, str, boost::is_any_of("|"));
+		return t;
+	}
+
+	template<typename T>
+	string CombineString(const T &t)
+	{
+		return t;
+	}
+
+	template<typename T, typename... Args>
+	string CombineString(const T &t, const Args&... rest)
+	{
+		return t + "|" + CombineString(rest...);
+	}
+
 
 }
 
