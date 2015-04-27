@@ -21,8 +21,6 @@ namespace controller { namespace io
 	using std::string;
 
 	const string  UserDataRoot = "Users"
-				, AccountDataRoot = "Accounts"
-				, AccountLogRoot = "AccountLog"
 				, LogicConfigRoot = "LogicConfig";
 
 	void ReadXMLFiles(DataController &data);
@@ -40,12 +38,12 @@ namespace controller { namespace io
 	void ReadLogicConfig(DataController &data);
 	void WriteLogicConfig(DataController &data);
 
-	void PrintAccountLog(const DataController &data,const string &acc, const file::path &Path);
-	void PrintAccountInfo(const DataController &data,const string &acc, const file::path &Path);
+	void PrintAccountLog(const DataController &data, const string &number, const file::path &path);
+	void PrintAccountInfo(const DataController &data, const string &number, const file::path &path);
 
-	void PrintAccountLog(DataController &data, const file::path &Path);
+	void PrintAccountLog(DataController &data, const file::path &path);
 	
-	void PrintAccountList(DataController &data, const file::path &Path);
+	void PrintAccountList(DataController &data, const file::path &path);
 	
 
 }}

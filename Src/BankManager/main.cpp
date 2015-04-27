@@ -11,6 +11,7 @@
 #include <clocale>
 #include <windows.h>
 #include "Controller\DataController.hpp"
+#include "Controller\IOController.hpp"
 
 using std::string;
 
@@ -28,15 +29,17 @@ try
 	//setlocale(LC_ALL, "");
 
 	helper::InitLog();
-
+	Config::get();
 
 
 	BOOST_LOG_TRIVIAL(info) << "Program Start";
 
+	
+	
+	Config::get().ParseOption(argc, argv);
+	
 	Test();
-
-	//Config::get().ParseOption(argc, argv);
-
+	
 	CLI::ShowMsg(WelcomeInfo);
 
 }
@@ -59,6 +62,7 @@ void Test()
 	using namespace model;
 	using namespace helper;
 	using namespace controller;
+	using namespace controller::io;
 	/*
 
    // xml_writer_settings<string> settings('\t', 1);
@@ -78,8 +82,8 @@ void Test()
    cout << lists[1].ToString() << endl;*/
 
 	controller::DataController d;
+	
 	/*
-
 	d.AdministratorList["admin"] = Administrator("admin", SHA1("admin"));
 	d.BankTellerList["teller1"] = BankTeller("teller1", SHA1("teller1"));
 	d.BankTellerList["teller2"] = BankTeller("teller2", SHA1("teller2"));
@@ -118,27 +122,13 @@ void Test()
 
 	d.AccountList["12345678"].CurrencyAccountList.push_back(ca);
 
-	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency, boost::posix_time::ptime(ca.LastUpdateDate)));
-
-	ptree pt;
-	ptree pt2 = d.GetDepositListPtree(), pt3 = d.GetForeignExchangePtree();
-	xml_writer_settings<string> settings('\t', 1);
-
-	auto child = pt2.get_child(DepositListRoot);
-
-	for(auto &i : child){
-	pt.add("LogicConfig." + DepositListPath, i.second.get_value<string>());
-	}
-
-	auto child2 = pt3.get_child(ForeignExchangeListRoot);
-	for (auto &i : child2) {
-	pt.add("LogicConfig." + ForeignExchangeListPath, i.second.get_value<string>());
-	}
-
-
-	write_xml(Config::get().GetLogicConfigPath(), pt, std::locale(), settings);
-
+	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency,"无" ,boost::posix_time::ptime(ca.LastUpdateDate)));
+	
+	WriteXMLFiles(d);
 	*/
+	ReadXMLFiles(d);
+
+	//cout << d.VerifyAccount("12345678", "123456") << d.VerifyAccount("12345678", "654321") << d.VerifyUser("admin", "admim");
 
 	//ptree pt;
 	//read_xml(Config::get().GetLogicConfigPath(), pt);

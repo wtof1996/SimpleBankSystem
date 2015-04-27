@@ -32,7 +32,7 @@ namespace controller
 
 	class DataController
 	{
-	private:
+	public:
 		std::map < string, model::Administrator > AdministratorList; //管理员列表
 		std::map < string, model::BankTeller > BankTellerList;		//柜员列表
 		std::map < string, model::ForeignExchange > ForeignExchangeList; //外汇汇率列表
@@ -52,8 +52,8 @@ namespace controller
 		ptree GetForeignExchangePtree() const;
 		ptree GetDepositListPtree() const;
 		ptree GetAccountListPtree() const;
-		ptree GetBankTellerListPtree() const;
 		ptree GetTotalRecordPtree() const;
+		ptree GetUserListPtree() const;
 
 		const decltype(AccountList)& GetAccountList() const { return AccountList; }
 		const decltype(BankTellerList)& GetBankTellerList() const { return BankTellerList; }

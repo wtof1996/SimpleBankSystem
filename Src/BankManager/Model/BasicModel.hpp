@@ -41,7 +41,7 @@ namespace model
 		string Code;
 		double Amount;
 
-		Currency(string name = "", string code = "", double amount = NAN)
+		Currency(const string & name = "", const string & code = "", double amount = NAN)
 			:Name(name), Code(code), Amount(amount) {}
 
 		using BasicModel::BasicModel;
@@ -68,7 +68,7 @@ namespace model
 		string Code;
 		double Rate;
 
-		ForeignExchange(string name = "", string code = "", double rate = NAN)
+		ForeignExchange(const string & name = "", const string & code = "", double rate = NAN)
 			:Name(name), Code(code), Rate(rate) { }
 
 		using BasicModel::BasicModel;
@@ -93,7 +93,7 @@ namespace model
 		double IRPerYear;
 		boost::gregorian::months Duration;
 
-		Deposit(string name = "", double rate = NAN, decltype(Duration) duration = boost::date_time::not_a_date_time)
+		Deposit(const string & name = "", double rate = NAN, decltype(Duration) duration = boost::date_time::not_a_date_time)
 			:Name(name), IRPerYear(rate), Duration(duration) { }
 		
 		using BasicModel::BasicModel;
@@ -162,7 +162,7 @@ namespace model
 		string PasswordHash;
 		std::vector<CurrencyAccount> CurrencyAccountList;
 
-		Account(string number = "", string name = "", string pwd = "", decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
+		Account(const string & number = "", const string & name = "", const string & pwd = "", decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
 			: Number(number), Name(name), PasswordHash(pwd), CurrencyAccountList(list) { }
 
 		using BasicModel::BasicModel;
@@ -187,11 +187,12 @@ namespace model
 		string Number;
 		string Name;
 		string Source;
+		string Description;
 		Currency Currency;
 		boost::posix_time::ptime Time;
 
-		Record(string number, string name, string src, model::Currency cur, boost::posix_time::ptime time = boost::posix_time::not_a_date_time)
-			:Number(number), Name(name), Source(src), Currency(cur), Time(time) { }
+		Record(const string &number, const string & name, const string & src, model::Currency cur, const string & desc = "", boost::posix_time::ptime time = boost::posix_time::not_a_date_time)
+			:Number(number), Name(name), Source(src), Currency(cur), Description(desc), Time(time) { }
 
 		using BasicModel::BasicModel;
 		Record() = default;

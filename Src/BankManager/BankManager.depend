@@ -321,13 +321,13 @@
 	<boost/log/sources/severity_logger.hpp>
 	<boost/log/sources/record_ostream.hpp>
 
-1430060291 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
+1430151040 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
 	"DataController.hpp"
 	"..\Helper.hpp"
 	<stdexcept>
 	<iostream>
 
-1430064905 i:\c++design\src\bankmanager\controller\datacontroller.hpp
+1430151018 i:\c++design\src\bankmanager\controller\datacontroller.hpp
 	<map>
 	<string>
 	<vector>
@@ -336,7 +336,7 @@
 	"..\Model\UserModel.hpp"
 	<boost\property_tree\ptree.hpp>
 
-1430059700 i:\c++design\src\bankmanager\model\basicmodel.hpp
+1430145103 i:\c++design\src\bankmanager\model\basicmodel.hpp
 	<string>
 	<vector>
 	<boost\date_time\gregorian\gregorian.hpp>
@@ -344,7 +344,7 @@
 	<boost\date_time\posix_time\posix_time.hpp>
 	"..\Helper.hpp"
 
-1430041861 i:\c++design\src\bankmanager\helper.hpp
+1430143874 i:\c++design\src\bankmanager\helper.hpp
 	<string>
 	<sstream>
 	<vector>
@@ -366,11 +366,14 @@
 	<string>
 	"..\Helper.hpp"
 
-1430063896 source:i:\c++design\src\bankmanager\controller\iocontroller.cpp
+1430151584 source:i:\c++design\src\bankmanager\controller\iocontroller.cpp
 	"IOController.hpp"
+	<boost\filesystem\fstream.hpp>
+	<boost\format.hpp>
 	<string>
+	<stdexcept>
 
-1430064420 i:\c++design\src\bankmanager\controller\iocontroller.hpp
+1430151268 i:\c++design\src\bankmanager\controller\iocontroller.hpp
 	<boost\filesystem.hpp>
 	<boost\property_tree\ptree.hpp>
 	<boost\property_tree\xml_parser.hpp>
@@ -393,13 +396,15 @@
 	<boost/log/sources/severity_logger.hpp>
 	<boost/log/sources/record_ostream.hpp>
 
-1430041902 source:i:\c++design\src\bankmanager\model\config.cpp
+1430150773 source:i:\c++design\src\bankmanager\model\config.cpp
 	"Config.hpp"
+	"..\View\cli.hpp"
 	<iostream>
 	<boost\log\trivial.hpp>
 	<boost\filesystem.hpp>
 	<boost\filesystem\fstream.hpp>
 	<stdexcept>
+	<boost\locale.hpp>
 
 1430045131 source:i:\c++design\src\bankmanager\view\cli.cpp
 	"cli.hpp"
@@ -418,7 +423,7 @@
 	<exception>
 	<sstream>
 
-1430059773 source:i:\c++design\src\bankmanager\main.cpp
+1430151767 source:i:\c++design\src\bankmanager\main.cpp
 	<stdexcept>
 	<string>
 	<vector>
@@ -429,11 +434,8 @@
 	"Model\Config.hpp"
 	<boost\log\trivial.hpp>
 	<boost\scope_exit.hpp>
-	<boost\property_tree\ptree.hpp>
-	<boost\property_tree\xml_parser.hpp>
-	<boost\algorithm\string.hpp>
 	<clocale>
 	<windows.h>
 	"Controller\DataController.hpp"
-	<boost/locale.hpp>
+	"Controller\IOController.hpp"
 

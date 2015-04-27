@@ -36,6 +36,7 @@ namespace helper
 	static CryptoPP::SHA1 _SHA1;
 	const string DefaultAESKey = "DefaultAESKey123";
 	const string DefaultAESIV = "1234567890123456";
+	const string NullString = "Null";
 
 	string SHA1(const string &msg);
 	string AES_128_EncryptHex(const string &plain, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
@@ -43,9 +44,10 @@ namespace helper
 
 	void InitLog();
 
-	inline std::vector<string> SplitModelString(const string &str)
+	inline std::vector<string> SplitModelString(string str)
 	{
 		std::vector<string> t;
+		boost::trim(str);
 		boost::split(t, str, boost::is_any_of("|"));
 		return t;
 	}

@@ -35,6 +35,23 @@ namespace controller
 		else             BankTellerList[u.Name] = model::BankTeller(u.Name, u.PasswordHash);
 	}
 
+	ptree DataController::GetUserListPtree() const
+	{
+		ptree ret;
+		
+ 		for (auto i : AdministratorList) {
+			ret.add(AdministratorListPath, i.second.ToString());
+		}
+		if (AdministratorList.empty()) ret.add(AdministratorListPath, helper::NullString);
+
+		for (auto i : BankTellerList) {
+			ret.add(BankTellerListPath, i.second.ToString());
+		}
+		if (BankTellerList.empty()) ret.add(BankTellerListPath, helper::NullString);
+
+		return ret;
+	}
+
 	ptree DataController::GetForeignExchangePtree() const
 	{
 		ptree ret;
@@ -63,16 +80,6 @@ namespace controller
 			for (auto j : i.second.CurrencyAccountList) {
 				ret.add(AccountListCAPath, AES_128_EncryptHex(j.ToString(), Config::get().AESKey, Config::get().AESIV));
 			}
-		}
-
-		return ret;
-	}
-
-	ptree DataController::GetBankTellerListPtree() const
-	{
-		ptree ret;
-		for (auto i : BankTellerList){
-			ret.add(BankTellerListPath, i.second.ToString());
 		}
 
 		return ret;
