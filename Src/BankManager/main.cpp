@@ -34,12 +34,10 @@ try
 
 	BOOST_LOG_TRIVIAL(info) << "Program Start";
 
-	
-	
 	Config::get().ParseOption(argc, argv);
-	
+
 	Test();
-	
+
 	CLI::ShowMsg(WelcomeInfo);
 
 }
@@ -82,7 +80,7 @@ void Test()
    cout << lists[1].ToString() << endl;*/
 
 	controller::DataController d;
-	
+
 	/*
 	d.AdministratorList["admin"] = Administrator("admin", SHA1("admin"));
 	d.BankTellerList["teller1"] = BankTeller("teller1", SHA1("teller1"));
@@ -123,12 +121,12 @@ void Test()
 	d.AccountList["12345678"].CurrencyAccountList.push_back(ca);
 
 	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency,"无" ,boost::posix_time::ptime(ca.LastUpdateDate)));
-	
+
 	WriteXMLFiles(d);
 	*/
 	ReadXMLFiles(d);
 
-	//cout << d.VerifyAccount("12345678", "123456") << d.VerifyAccount("12345678", "654321") << d.VerifyUser("admin", "admim");
+	cout << d.VerifyAccount("12345678", "123456") << d.VerifyAccount("12345678", "654321") << d.VerifyUser("admin", "admin");
 
 	//ptree pt;
 	//read_xml(Config::get().GetLogicConfigPath(), pt);

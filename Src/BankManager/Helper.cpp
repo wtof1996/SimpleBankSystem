@@ -98,7 +98,7 @@ namespace helper
 
 	}
 
-	string AES_128_DecryptHex(const string &cipherHex, const string &key, const string &iv)
+	string AES_128_DecryptHex(string cipherHex, const string &key, const string &iv)
 	{	
 
 #ifdef NO_AES
@@ -109,6 +109,7 @@ namespace helper
 		for (size_t i = 0; i < CryptoPP::AES::DEFAULT_KEYLENGTH; ++i) bkey[i] = key[i];
 		for (size_t i = 0; i < CryptoPP::AES::BLOCKSIZE; ++i) biv[i] = iv[i];
 
+		boost::trim(cipherHex);
 		string cipherText(cipherHex.size() / 2, '\0');
 		for (size_t i = 0; i < cipherHex.size(); i += 2){
 			cipherText[i / 2] = Hex2uChar(cipherHex[i], cipherHex[i + 1]);

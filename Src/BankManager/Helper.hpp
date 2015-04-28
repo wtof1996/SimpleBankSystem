@@ -40,14 +40,13 @@ namespace helper
 
 	string SHA1(const string &msg);
 	string AES_128_EncryptHex(const string &plain, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
-	string AES_128_DecryptHex(const string &cipherHex, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
+	string AES_128_DecryptHex(string cipherHex, const string &key = DefaultAESKey, const string &iv = DefaultAESIV);
 
 	void InitLog();
 
-	inline std::vector<string> SplitModelString(string str)
+	inline std::vector<string> SplitModelString(const string &str)
 	{
 		std::vector<string> t;
-		boost::trim(str);
 		boost::split(t, str, boost::is_any_of("|"));
 		return t;
 	}

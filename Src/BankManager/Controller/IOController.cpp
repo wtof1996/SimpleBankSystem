@@ -102,7 +102,7 @@ namespace controller { namespace io
 
 	void ReadLogicConfig(DataController &data)
 	{
-		ptree pt;
+		ptree pt;                                                                                                         
 		ReadXMLFile(Config::get().GetLogicConfigPath(), pt);
 
 		auto child = pt.get_child(LogicConfigRoot);

@@ -15,9 +15,8 @@ namespace model
 	class User
 	{
 	public:
-
-		string Name;
-		string PasswordHash;
+		string Name = "";
+		string PasswordHash = "";
 		virtual bool isAdmin() { return false;}
 
 		void FromString(const string &str)
@@ -27,24 +26,29 @@ namespace model
 		}
 		string ToString() { return CombineString(Name, PasswordHash); }
 
-		User(const string &name = "", const string &pwd = "")
+		User() = default;
+
+		User(const string &name, const string &pwd)
 			:Name(name), PasswordHash(pwd) { }
+
+        User(const string& serial)
+		{
+			FromString(serial);
+		}
+
         virtual ~User() = default;
 	};
 
 	class BankTeller : public User
 	{
 	public:
-		BankTeller(const string &name = "", const string &pwd = "")
-			:User(name, pwd) { }
+		using User::User;
 	};
 
 	class Administrator : public User
 	{
     public:
-
-		Administrator(const string &name = "", const string &pwd = "")
-			:User(name, pwd) { }
+		using User::User;
         virtual bool isAdmin() { return true;}
 	};
 }

@@ -38,7 +38,7 @@ namespace controller
 	ptree DataController::GetUserListPtree() const
 	{
 		ptree ret;
-		
+
  		for (auto i : AdministratorList) {
 			ret.add(AdministratorListPath, i.second.ToString());
 		}
@@ -127,8 +127,7 @@ namespace controller
 		ForeignExchangeList.clear();
 		auto child = XMLtree.get_child(ForeignExchangeListRoot);
 		for (auto &i : child) {
-			model::ForeignExchange tmp;
-			tmp.FromString(i.second.get_value<string>());
+            model::ForeignExchange tmp(i.second.get_value<string>());
 			ForeignExchangeList[tmp.Code] = tmp;
 		}
 	}
@@ -138,8 +137,7 @@ namespace controller
 		DepositList.clear();
 		auto child = XMLtree.get_child(DepositListRoot);
 		for (auto &i : child) {
-			model::Deposit tmp;
-			tmp.FromString(i.second.get_value<string>());
+            model::Deposit tmp(i.second.get_value<string>());
 			DepositList[tmp.Name] = tmp;
 		}
 	}
@@ -149,9 +147,7 @@ namespace controller
 		TotalRecord.clear();
 		auto child = XMLtree.get_child(TotalRecordRoot);
 		for (auto &i : child) {
-			model::Record tmp;
-			tmp.FromString(AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));
-			TotalRecord.push_back(tmp);
+			TotalRecord.emplace_back(AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));
 		}
 
 	}
@@ -161,16 +157,14 @@ namespace controller
 		AdministratorList.clear();
 		auto child = XMLtree.get_child(AdministratorListRoot);
 		for (auto &i : child) {
-			model::Administrator tmp;
-			tmp.FromString(i.second.get_value<string>());
+            model::Administrator tmp(i.second.get_value<string>());
 			AdministratorList[tmp.Name] = tmp;
 		}
 
 		BankTellerList.clear();
 		child = XMLtree.get_child(BankTellerListRoot);
 		for (auto &i : child) {
-			model::BankTeller tmp;
-			tmp.FromString(i.second.get_value<string>());
+            model::BankTeller tmp(i.second.get_value<string>());
 			BankTellerList[tmp.Name] = tmp;
 		}
 	}
@@ -179,15 +173,12 @@ namespace controller
 	{
 		auto child = XMLtree.get_child(AccountListRoot);
 		for (auto &i : child) {
-			model::Account tmp;
-			tmp.FromString(i.second.get_value<string>());
+            model::Account tmp((AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV)));
 			AccountList[tmp.Number] = tmp;
 			auto &child_list = i.second;
 			auto &acc = AccountList[tmp.Number];
 			for (auto &j : child_list) {
-				model::CurrencyAccount tmp;
-				tmp.FromString(j.second.get_value<string>());
-				acc.CurrencyAccountList.push_back(tmp);
+				acc.CurrencyAccountList.emplace_back(AES_128_DecryptHex(j.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));
 			}
 		}
 	}

@@ -5,7 +5,6 @@
 		<Option title="BankManager" />
 		<Option pch_mode="2" />
 		<Option compiler="gnu_gcc_compiler_x64" />
-		<Option virtualFolders="Model\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/BankManager" prefix_auto="1" extension_auto="1" />
@@ -60,9 +59,7 @@
 		</Compiler>
 		<Unit filename="Controller/DataController.cpp" />
 		<Unit filename="Controller/DataController.hpp" />
-		<Unit filename="Controller/IOController.cpp">
-			<Option virtualFolder="Model/" />
-		</Unit>
+		<Unit filename="Controller/IOController.cpp" />
 		<Unit filename="Controller/IOController.hpp" />
 		<Unit filename="Helper.cpp" />
 		<Unit filename="Helper.hpp" />
