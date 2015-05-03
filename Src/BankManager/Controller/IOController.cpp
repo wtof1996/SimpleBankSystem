@@ -99,6 +99,8 @@ namespace controller { namespace io
 		ReadXMLFile(Config::get().GetUserDataPath(), pt);
 
 		data.SetUserList(pt.get_child(UserDataRoot));
+
+		BOOST_LOG_TRIVIAL(info) << "User data file loaded:" << Config::get().GetUserDataPath();
 	}
 
 	void WriteUserData(DataController &data)
@@ -109,6 +111,8 @@ namespace controller { namespace io
 
 		WriteXMLFile(Config::get().GetUserDataPath(), real_pt);
 
+		BOOST_LOG_TRIVIAL(info) << "User data file saved:" << Config::get().GetUserDataPath();
+
 	}
 
 	void ReadAccountData(DataController &data)
@@ -117,6 +121,8 @@ namespace controller { namespace io
 		ReadXMLFile(Config::get().GetAccountDataPath(), pt);
 
 		data.SetAccountList(pt);
+
+		BOOST_LOG_TRIVIAL(info) << "Account data file loaded:" << Config::get().GetAccountDataPath();
 	}
 
 	void WriteAccountData(DataController &data)
@@ -125,6 +131,7 @@ namespace controller { namespace io
 
 		WriteXMLFile(Config::get().GetAccountDataPath(), pt);
 
+		BOOST_LOG_TRIVIAL(info) << "Account data file saved:" << Config::get().GetAccountDataPath();
 	}
 
 	void ReadAccountLog(DataController &data)
@@ -133,6 +140,8 @@ namespace controller { namespace io
 		ReadXMLFile(Config::get().GetAccountLogPath(), pt);
 
 		data.SetTotalRecord(pt);
+
+		BOOST_LOG_TRIVIAL(info) << "Account log file loaded:" << Config::get().GetAccountLogPath();
 	}
 
 	void WriteAccountLog(DataController &data)
@@ -140,6 +149,8 @@ namespace controller { namespace io
 		ptree pt = data.GetTotalRecordPtree();
 
 		WriteXMLFile(Config::get().GetAccountLogPath(), pt);
+
+		BOOST_LOG_TRIVIAL(info) << "Account log file saved:" << Config::get().GetAccountLogPath();
 	}
 
 	void ReadLogicConfig(DataController &data)
@@ -151,6 +162,8 @@ namespace controller { namespace io
 
 		data.SetDepositList(child);
 		data.SetForeignExchangeRateList(child);
+
+		BOOST_LOG_TRIVIAL(info) << "Logic config file loaded:" << Config::get().GetLogicConfigPath();
 	}
 
 	void WriteLogicConfig(DataController &data)
@@ -170,11 +183,15 @@ namespace controller { namespace io
 		}
 
 		WriteXMLFile(Config::get().GetLogicConfigPath(), pt);
+
+		BOOST_LOG_TRIVIAL(info) << "Logic config file saved:" << Config::get().GetLogicConfigPath();
 	}
 
 	void PrintAccountLog(const DataController &data, const string &number, const file::path &path)
 	{
 		PrintLog(data.GetAccountRecord(number), path);
+
+		BOOST_LOG_TRIVIAL(info) << "Account " + number + " log printed:" << path;
 	}
 
 	void PrintAccountInfo(const DataController &data, const string &number, const file::path &path)
@@ -185,11 +202,15 @@ namespace controller { namespace io
 		PrintAccInfo(acc, fout);
 
 		fout.close();
+
+		BOOST_LOG_TRIVIAL(info) << "Account " + number + " info printed:" << path;
 	}
 
 	void PrintAccountLog(DataController &data, const file::path &path)
 	{
 		PrintLog(data.GetTotalRecord(), path);
+		
+		BOOST_LOG_TRIVIAL(info) << "All accounts log printed:" << path;
 	}
 
 	void PrintAccountList(DataController &data, const file::path &path)
@@ -204,5 +225,7 @@ namespace controller { namespace io
 			PrintAccInfo(acc, fout);
 		}
 		fout.close();
+
+		BOOST_LOG_TRIVIAL(info) << "All accounts info printed:" << path;
 	}
 }}

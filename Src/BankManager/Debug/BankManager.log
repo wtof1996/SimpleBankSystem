@@ -1,5 +1,12 @@
-﻿生成启动时间为 2015/4/23 2:32:24。
+﻿生成启动时间为 2015/5/4 0:49:18。
+     1>项目“I:\C++Design\Src\BankManager\BankManager.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Controller\DataController.cpp Helper.cpp Controller\IOController.cpp Controller\md5.cpp main.cpp Model\Config.cpp View\cli.cpp View\MainView.cpp
+         MainView.cpp
+     1>i:\c++design\src\bankmanager\view\mainview.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>i:\c++design\src\bankmanager\view\cli.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>已完成生成项目“I:\C++Design\Src\BankManager\BankManager.vcxproj”(Build 个目标)的操作 - 失败。
 
-生成成功。
+生成失败。
 
-已用时间 00:00:00.09
+已用时间 00:00:03.54

@@ -12,14 +12,9 @@
 #include <windows.h>
 #include "Controller\DataController.hpp"
 #include "Controller\IOController.hpp"
+#include "View\MainView.hpp"
 
 using std::string;
-
-using namespace boost::property_tree;
-using namespace std;
-
-const string WelcomeInfo = "欢迎使用银行业务系统!";
-void Test();
 
 int main(int argc, char* argv[])
 {
@@ -31,14 +26,12 @@ try
 	helper::InitLog();
 	Config::get();
 
-
 	BOOST_LOG_TRIVIAL(info) << "Program Start";
 
 	Config::get().ParseOption(argc, argv);
 
-	Test();
-
-	CLI::ShowMsg(WelcomeInfo);
+	view::MainView main;
+	while (main.Loop) main.Show();
 
 }
 catch(std::exception &e)
@@ -46,23 +39,22 @@ catch(std::exception &e)
     BOOST_LOG_TRIVIAL(fatal) << e.what();
 }
 
-	BOOST_SCOPE_EXIT(void){
-		BOOST_LOG_TRIVIAL(info) << "Program stopped";
-	}BOOST_SCOPE_EXIT_END
-
-
+BOOST_SCOPE_EXIT(void){
+	BOOST_LOG_TRIVIAL(info) << "Program stopped";
+}BOOST_SCOPE_EXIT_END
 
 	return 0;
+
 }
 
+
+/*
 void Test()
 {
 	using namespace model;
 	using namespace helper;
 	using namespace controller;
 	using namespace controller::io;
-	/*
-
    // xml_writer_settings<string> settings('\t', 1);
    read_xml(Config::get().GetUserDataPath(), pt);
 
@@ -79,9 +71,9 @@ void Test()
    cout << lists[0].ToString() << endl;
    cout << lists[1].ToString() << endl;*/
 
-	controller::DataController d;
+	//controller::DataController d;
+    /*
 
-	
 	d.AdministratorList["admin"] = Administrator("admin", SHA1("admin"));
 	d.BankTellerList["teller1"] = BankTeller("teller1", SHA1("teller1"));
 	d.BankTellerList["teller2"] = BankTeller("teller2", SHA1("teller2"));
@@ -122,9 +114,9 @@ void Test()
 
 	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency,"无" ,boost::posix_time::ptime(ca.LastUpdateDate)));
 
-	WriteXMLFiles(d);
-	
-	//ReadXMLFiles(d);
+	WriteXMLFiles(d);*/
+
+//	ReadXMLFiles(d);
 
 	//PrintAccountInfo(d, "12345678", ".\\12345678.txt");
 	//PrintAccountLog(d, "12345678", ".\\12345678.log");
@@ -145,4 +137,4 @@ void Test()
 	//////
 	//CLI::ShowMsg(d.GetDeposit("活期").Name);
 	//CLI::ShowMsg(to_string(d.GetForeignExchangeRate("USD")));
-}
+//}

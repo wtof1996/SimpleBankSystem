@@ -75,6 +75,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model\Config.cpp" />
     <ClCompile Include="View\cli.cpp" />
+    <ClCompile Include="View\MainView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller\DataController.hpp" />
@@ -84,7 +85,9 @@
     <ClInclude Include="Model\BasicModel.hpp" />
     <ClInclude Include="Model\Config.hpp" />
     <ClInclude Include="Model\UserModel.hpp" />
+    <ClInclude Include="View\BaseView.hpp" />
     <ClInclude Include="View\cli.hpp" />
+    <ClInclude Include="View\MainView.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

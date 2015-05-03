@@ -67,6 +67,9 @@
 		<Unit filename="Model/Config.cpp" />
 		<Unit filename="Model/Config.hpp" />
 		<Unit filename="Model/UserModel.hpp" />
+		<Unit filename="View/BaseView.hpp" />
+		<Unit filename="View/MainView.cpp" />
+		<Unit filename="View/MainView.hpp" />
 		<Unit filename="View/cli.cpp" />
 		<Unit filename="View/cli.hpp" />
 		<Unit filename="main.cpp" />

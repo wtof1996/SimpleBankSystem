@@ -32,7 +32,7 @@ namespace controller
 	//XML路径
 	class DataController
 	{
-	public:
+	private:
 		std::map < string, model::Administrator > AdministratorList; //管理员列表
 		std::map < string, model::BankTeller > BankTellerList;		//柜员列表
 		std::map < string, model::ForeignExchange > ForeignExchangeList; //外汇汇率列表

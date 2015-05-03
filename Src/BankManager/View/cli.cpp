@@ -1,29 +1,14 @@
 #include "cli.hpp"
-
-#ifdef CONV_UTF8_GBK
-#include <boost\locale.hpp>
-#endif // CONV_UTF8_GBK
-
 #include <algorithm>
-
-//用于windows下命令行将UTF－8转换为GBK
-inline std::string convert(const std::string &s)
-{
-
-#ifdef CONV_UTF8_GBK
-    return boost::locale::conv::from_utf(s, "GBK" );
-#else
-    return s;
-#endif // CONV_UTF8_GBK
-}
 
 namespace CLI
 {
-	void ShowMsg(const string &msg)
+	void ShowMsg(const string &msg, bool nl)
 	{
 		cout.clear();
 
-		cout << convert(msg) << endl;
+		cout << convert(msg);
+		if(nl) cout << endl;
 	}
 
 	void ShowBoxMsg(const string &msg, const char border)
@@ -66,7 +51,8 @@ namespace CLI
 
 		size_t index = 0;
 		for (auto &i : list) {
-			cout << "[" << ++index << "] : " << convert(i) << endl;
+
+			ShowMsg("[" + std::to_string(++index) + "] : " + i);
 
 			BOOST_LOG_TRIVIAL(debug) << "Item Index:" << index - 1;
 			BOOST_LOG_TRIVIAL(debug) << "Item Name:" << i;

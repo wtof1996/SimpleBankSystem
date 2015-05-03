@@ -327,7 +327,7 @@
 	<stdexcept>
 	<iostream>
 
-1430268266 i:\c++design\src\bankmanager\controller\datacontroller.hpp
+1430668195 i:\c++design\src\bankmanager\controller\datacontroller.hpp
 	<map>
 	<string>
 	<vector>
@@ -366,14 +366,14 @@
 	<string>
 	"..\Helper.hpp"
 
-1430270972 source:i:\c++design\src\bankmanager\controller\iocontroller.cpp
+1430667065 source:i:\c++design\src\bankmanager\controller\iocontroller.cpp
 	"IOController.hpp"
 	<boost\filesystem\fstream.hpp>
 	<boost\format.hpp>
 	<string>
 	<stdexcept>
 
-1430635549 i:\c++design\src\bankmanager\controller\iocontroller.hpp
+1430644396 i:\c++design\src\bankmanager\controller\iocontroller.hpp
 	<boost\filesystem.hpp>
 	<boost\property_tree\ptree.hpp>
 	<boost\property_tree\xml_parser.hpp>
@@ -406,12 +406,11 @@
 	<stdexcept>
 	<boost\locale.hpp>
 
-1430276344 source:i:\c++design\src\bankmanager\view\cli.cpp
+1430671854 source:i:\c++design\src\bankmanager\view\cli.cpp
 	"cli.hpp"
-	<boost\locale.hpp>
 	<algorithm>
 
-1430276336 i:\c++design\src\bankmanager\view\cli.hpp
+1430672111 i:\c++design\src\bankmanager\view\cli.hpp
 	<iostream>
 	<string>
 	<boost\regex.hpp>
@@ -422,8 +421,9 @@
 	<cstdlib>
 	<exception>
 	<sstream>
+	<boost\locale.hpp>
 
-1430640594 source:i:\c++design\src\bankmanager\main.cpp
+1430671250 source:i:\c++design\src\bankmanager\main.cpp
 	<stdexcept>
 	<string>
 	<vector>
@@ -438,4 +438,17 @@
 	<windows.h>
 	"Controller\DataController.hpp"
 	"Controller\IOController.hpp"
+	"View\MainView.hpp"
+
+1430671325 source:i:\c++design\src\bankmanager\view\mainview.cpp
+	"MainView.hpp"
+	<string>
+
+1430670987 i:\c++design\src\bankmanager\view\mainview.hpp
+	"cli.hpp"
+	"BaseView.hpp"
+	"..\Controller\DataController.hpp"
+	"..\Controller\IOController.hpp"
+
+1430670981 i:\c++design\src\bankmanager\view\baseview.hpp
 

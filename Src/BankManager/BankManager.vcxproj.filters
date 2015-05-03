@@ -36,6 +36,9 @@
     <ClCompile Include="Helper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="View\MainView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="View\cli.hpp">
@@ -60,6 +63,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Helper.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\MainView.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\BaseView.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
