@@ -37,12 +37,12 @@ namespace config
 
 	private:
 		Config();
-		option::options_description optionDescription;
+		option::options_description optionDescription;//命令行参数描述
 
-		string accountDataPath = ".\\AccountData.xml";
-		string accountLogPath = ".\\AccountLog.xml";
-		string userDataPath = ".\\UserData.xml";
-		string logicConfigPath = ".\\LogicConfig.xml";
+		string accountDataPath = ".\\AccountData.xml";//账户数据路径
+		string accountLogPath = ".\\AccountLog.xml";//账户交易记录路径
+		string userDataPath = ".\\UserData.xml";//用户数据路径
+		string logicConfigPath = ".\\LogicConfig.xml";//业务逻辑设置文件路径
 
 		~Config() = default;
 

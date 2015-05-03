@@ -11,13 +11,13 @@ namespace model
 	using std::string;
 	using helper::SplitModelString;
 	using helper::CombineString;
-
+	//用户基类
 	class User
 	{
 	public:
-		string Name = "";
-		string PasswordHash = "";
-		virtual bool isAdmin() { return false;}
+		string Name = ""; //姓名
+		string PasswordHash = "";//SHA-1后的密码
+		virtual bool isAdmin() { return false;} //是否为管理员
 
 		void FromString(const string &str)
 		{
@@ -38,13 +38,15 @@ namespace model
 
         virtual ~User() = default;
 	};
-
+	
+	//柜员
 	class BankTeller : public User
 	{
 	public:
 		using User::User;
 	};
-
+	
+	//管理员
 	class Administrator : public User
 	{
     public:

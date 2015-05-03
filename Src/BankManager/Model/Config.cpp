@@ -41,7 +41,7 @@ namespace config
 	void Config::ParseOption(int argc, char* argv[])
 	{
  		variables_map vm;
-		
+		//优先检查设置文件
 		if (boost::filesystem::status(".\\config.ini").type() == boost::filesystem::regular_file) {
 			BOOST_LOG_TRIVIAL(info) << "Read Config from .\\config.ini";
 			
@@ -78,7 +78,7 @@ namespace config
 
 		auto checkPath = [](string &p){if (boost::filesystem::status(p).type() != boost::filesystem::regular_file)
 										CLI::ShowMsg("无效的文件路径: " + p),  throw std::invalid_argument("Invalid Path:" + p);};
-
+		//保证数据文件有效性
 		checkPath(accountDataPath);
 		checkPath(accountLogPath);
 		checkPath(userDataPath);

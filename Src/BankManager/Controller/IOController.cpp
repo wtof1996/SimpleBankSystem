@@ -6,6 +6,8 @@
 
 using namespace boost::property_tree;
 
+
+//通用XML读写函数
 void ReadXMLFile(const std::string &path, ptree &pt)
 {
 	try{
@@ -30,6 +32,46 @@ void WriteXMLFile(const std::string &path, const ptree &pt)
 		CLI::ShowMsg("无法写入文件:" + path);
 		BOOST_LOG_TRIVIAL(fatal) << "Can't write file:" + path;
 		throw;
+	}
+}
+
+template<typename T>
+void PrintLog(const T &log, const boost::filesystem::path &path)
+{
+	using std::endl;
+
+	boost::filesystem::ofstream fout(path);
+
+	fout << " 卡号 | 姓名 | 来源 | 货币代码 | 金额 | 时间 | 备注 " << endl;
+
+	auto addSpace = [](const std::string &a) { return " " + a + " "; };
+
+	for (auto i : log) {
+		fout << helper::CombineString(addSpace(i.Number), addSpace(i.Name), addSpace(i.Source),
+			addSpace(i.Currency.Code), addSpace((boost::format("%.2lf") % i.Currency.Amount).str()),
+			addSpace(boost::posix_time::to_iso_extended_string(i.Time)),
+			addSpace(i.Description))
+			<< endl << endl;
+	}
+
+	fout.close();
+}
+
+void PrintAccInfo(const model::Account &acc, boost::filesystem::ofstream &fout)
+{
+	using std::endl;
+
+	fout << "卡号 : " << acc.Number << endl
+		<< "姓名 : " << acc.Name << endl;
+
+	for (auto i : acc.CurrencyAccountList){
+		fout << i.Currency.Name << "账户: " << endl;
+		fout << "        余额 : " << (boost::format("%.2lf") % i.Currency.Amount).str() << endl;
+		fout << "        存款类型 : " << i.DespoitType.Name << endl;
+		fout << "        利率(%) : " << i.DespoitType.IRPerYear << endl;
+		fout << "        计息开始日期　:　" << boost::gregorian::to_iso_extended_string(i.Period.begin()) << endl;
+		fout << "        最后更新日期 : " << boost::gregorian::to_iso_extended_string(i.LastUpdateDate) << endl;
+		fout << endl;
 	}
 }
 
@@ -102,7 +144,7 @@ namespace controller { namespace io
 
 	void ReadLogicConfig(DataController &data)
 	{
-		ptree pt;                                                                                                         
+		ptree pt;
 		ReadXMLFile(Config::get().GetLogicConfigPath(), pt);
 
 		auto child = pt.get_child(LogicConfigRoot);
@@ -132,97 +174,34 @@ namespace controller { namespace io
 
 	void PrintAccountLog(const DataController &data, const string &number, const file::path &path)
 	{
-		using std::endl;
-		auto log = data.GetAccountRecord(number);
-
-		file::ofstream fout(path);
-
-		fout << "卡号 | 姓名 | 来源 | 货币代码 | 金额 | 时间 | 备注 " << endl;
-
-		auto addSpace = [](const string &a) { return " " + a + " "; };
-
-		for (auto i : log) {
-			fout << helper::CombineString(addSpace(i.Number), addSpace(i.Name), addSpace(i.Source),
-										  addSpace(i.Currency.Code), addSpace(std::to_string(i.Currency.Amount)),
-										  addSpace(boost::posix_time::to_iso_extended_string(i.Time)),
-										  addSpace(i.Description))
-				 << endl << endl;
-		}
-
-		fout.close();
-
+		PrintLog(data.GetAccountRecord(number), path);
 	}
 
 	void PrintAccountInfo(const DataController &data, const string &number, const file::path &path)
 	{
-		using std::endl;
-
 		auto acc = data.GetAccount(number);
 		file::ofstream fout(path);
 
-		fout << "卡号 : " << acc.Number << endl
-			<< "姓名 : " << acc.Name << endl;
-
-		for (auto i : acc.CurrencyAccountList){
-			fout << i.Currency.Name << "    账户: " << endl;
-			fout << "        余额 : " << boost::format(".2lf") % i.Currency.Amount << endl;
-			fout << "        存款类型 : " << i.DespoitType.Name << endl;
-			fout << "        利率(%) : " << i.DespoitType.IRPerYear << endl;
-			fout << "        计息开始日期　:　" << boost::gregorian::to_simple_string(i.Period.begin()) << endl;
-			fout << "        最后更新日期 : " << boost::gregorian::to_simple_string(i.LastUpdateDate) << endl;
-			fout << endl;
-		}
+		PrintAccInfo(acc, fout);
 
 		fout.close();
 	}
 
 	void PrintAccountLog(DataController &data, const file::path &path)
 	{
-		using std::endl;
-		auto log = data.GetTotalRecord();
-
-		file::ofstream fout(path);
-
-		fout << "卡号 | 姓名 | 来源 | 货币代码 | 金额 | 时间 | 备注 " << endl;
-
-		auto addSpace = [](const string &a) { return " " + a + " "; };
-
-		for (auto i : log) {
-			fout << helper::CombineString(addSpace(i.Number), addSpace(i.Name), addSpace(i.Source),
-				addSpace(i.Currency.Code), addSpace(std::to_string(i.Currency.Amount)),
-				addSpace(boost::posix_time::to_iso_extended_string(i.Time)),
-				addSpace(i.Description))
-				<< endl << endl;
-		}
-
-		fout.close();
+		PrintLog(data.GetTotalRecord(), path);
 	}
 
 	void PrintAccountList(DataController &data, const file::path &path)
 	{
-		using std::endl;
-
 		auto list = data.GetAccountList();
 
 		file::ofstream fout(path);
 
-
 		for (auto a : list) {
 
 			auto &acc = a.second;
-
-			fout << "卡号 : " << acc.Number << endl
-				<< "姓名 : " << acc.Name << endl;
-
-			for (auto i : acc.CurrencyAccountList){
-				fout << i.Currency.Name << "    账户: " << endl;
-				fout << "        余额 : " << boost::format(".2lf") % i.Currency.Amount << endl;
-				fout << "        存款类型 : " << i.DespoitType.Name << endl;
-				fout << "        利率(%) : " << i.DespoitType.IRPerYear << endl;
-				fout << "        计息开始日期　:　" << boost::gregorian::to_simple_string(i.Period.begin()) << endl;
-				fout << "        最后更新日期 : " << boost::gregorian::to_simple_string(i.LastUpdateDate) << endl;
-				fout << endl;
-			}
+			PrintAccInfo(acc, fout);
 		}
 		fout.close();
 	}

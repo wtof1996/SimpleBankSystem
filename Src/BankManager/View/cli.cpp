@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+//用于windows下命令行将UTF－8转换为GBK
 inline std::string convert(const std::string &s)
 {
 

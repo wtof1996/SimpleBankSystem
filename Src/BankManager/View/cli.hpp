@@ -18,7 +18,9 @@
 #include <exception>
 #include <sstream>
 
+#ifdef _WIN32
 #define CONV_UTF8_GBK
+#endif
 
 namespace CLI
 {

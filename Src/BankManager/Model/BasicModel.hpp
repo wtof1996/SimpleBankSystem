@@ -1,5 +1,8 @@
 #pragma once
 
+//#ifndef BASICMODEL_HPP_INCLUDED
+//#define BASICMODEL_HPP_INCLUDED
+
 #include <string>
 #include <vector>
 #include <boost\date_time\gregorian\gregorian.hpp>
@@ -7,23 +10,20 @@
 #include <boost\date_time\posix_time\posix_time.hpp>
 #include "..\Helper.hpp"
 
-
-//#ifndef BASICMODEL_HPP_INCLUDED
-//#define BASICMODEL_HPP_INCLUDED
-
 namespace model
 {
 	using std::string;
 	using helper::SplitModelString;
 	using helper::CombineString;
-
+	
+	//货币类，用于表示实际的货币
 	class Currency
 	{
 	public:
 
-		string Name = "";
-		string Code = "";
-		double Amount = NAN;
+		string Name = "";  //货币名称
+		string Code = "";  //货币代码
+		double Amount = NAN; //金额
 
 		Currency(const string & name, const string & code, double amount = NAN)
 			:Name(name), Code(code), Amount(amount) {}
@@ -48,13 +48,15 @@ namespace model
 	};
 
 	static const Currency MainCurrency = Currency("人民币", "CNY");
-
+	//主要货币
+	
+	//外汇类, 表示一种外汇
 	class ForeignExchange
 	{
 	public:
-		string Name = "";
-		string Code = "";
-		double Rate = NAN;
+		string Name = ""; //外汇名称
+		string Code = ""; //外汇货币代码
+		double Rate = NAN;//对主要货币的汇率, 1:主要货币
 
 		ForeignExchange(const string & name, const string & code, double rate)
 			:Name(name), Code(code), Rate(rate) { }
@@ -77,14 +79,15 @@ namespace model
 
 		string ToString() { return CombineString(Name, Code, std::to_string(Rate)); }
 	};
-
+	
+	//存款业务类，表示一种存款业务
 	class Deposit
 	{
 	public:
-		string Name = "";
-		double IRPerYear = NAN;
-		boost::gregorian::months Duration = boost::date_time::not_a_date_time;
-
+		string Name = ""; //业务名称
+		double IRPerYear = NAN; //年利率
+		boost::gregorian::months Duration = boost::date_time::not_a_date_time; //存期，为方便计算按月数存储
+		//活期则表示为not_a_date_time
         Deposit(const string& serial)
         {
             FromString(serial);
@@ -107,14 +110,15 @@ namespace model
 		string ToString() { return CombineString(Name, std::to_string(IRPerYear),
 							std::to_string(Duration.number_of_months().as_number())); }
 	};
-
+	
+	//货币账户，表示用某种货币存储的子账户
 	class CurrencyAccount
 	{
 	public:
-		Currency Currency;
-		Deposit DespoitType;
-		boost::gregorian::date_period Period {boost::gregorian::date(), boost::gregorian::date()};
-		boost::gregorian::date LastUpdateDate {boost::date_time::not_a_date_time};
+		Currency Currency; //货币
+		Deposit DespoitType; //存款业务类型
+		boost::gregorian::date_period Period {boost::gregorian::date(), boost::gregorian::date()}; //存期起止时间，活期为相同时间 
+		boost::gregorian::date LastUpdateDate {boost::date_time::not_a_date_time}; //上一次计算利息的日期
 
 		CurrencyAccount(const string &serial)
 		{
@@ -144,15 +148,15 @@ namespace model
 							boost::gregorian::to_iso_string(LastUpdateDate)); }
 
 	};
-
+	//账户类，即客户的银行账户
 	class Account
 	{
 	public:
-		string Number = "";
-		string Name = "";
-		string PasswordHash = "";
+		string Number = ""; // 卡号
+		string Name = "";  //户名
+		string PasswordHash = ""; //SHA-1后的密码
 		std::vector<CurrencyAccount> CurrencyAccountList = decltype(CurrencyAccountList)();
-
+		//子货币账户列表
 		Account(const string & number, const string & name, const string & pwd, decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
 			: Number(number), Name(name), PasswordHash(pwd), CurrencyAccountList(list) { }
 
@@ -175,16 +179,16 @@ namespace model
 		string ToString() { return CombineString(Number, Name, PasswordHash); }
 
 	};
-
+	//交易记录类，即用于表示一条交易记录
 	class Record
 	{
 	public:
-		string Number = "";
-		string Name = "";
-		string Source = "";
-		Currency Currency;
-		string Description = "";
-		boost::posix_time::ptime Time = boost::posix_time::not_a_date_time;
+		string Number = "";//卡号
+		string Name = "";//姓名
+		string Source = "";//来源
+		Currency Currency;//货币
+		string Description = "";//备注
+		boost::posix_time::ptime Time = boost::posix_time::not_a_date_time;//交易时间
 
 		Record(const string &number, const string & name, const string & src, model::Currency cur, const string & desc, boost::posix_time::ptime time)
 			:Number(number), Name(name), Source(src), Currency(cur), Description(desc), Time(time) { }

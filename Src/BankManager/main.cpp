@@ -81,7 +81,7 @@ void Test()
 
 	controller::DataController d;
 
-	/*
+	
 	d.AdministratorList["admin"] = Administrator("admin", SHA1("admin"));
 	d.BankTellerList["teller1"] = BankTeller("teller1", SHA1("teller1"));
 	d.BankTellerList["teller2"] = BankTeller("teller2", SHA1("teller2"));
@@ -116,18 +116,21 @@ void Test()
 	boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423")),
 	boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423"))
 	);
-	ca.LastUpdateDate = boost::gregorian::date(boost::gregorian::from_undelimited_string("20140424"));
+	ca.LastUpdateDate = boost::gregorian::date(boost::gregorian::from_undelimited_string("20140423"));
 
 	d.AccountList["12345678"].CurrencyAccountList.push_back(ca);
 
 	d.TotalRecord.push_back(Record("12345678", "冯懿宣", "开户", ca.Currency,"无" ,boost::posix_time::ptime(ca.LastUpdateDate)));
 
 	WriteXMLFiles(d);
-	*/
-	ReadXMLFiles(d);
+	
+	//ReadXMLFiles(d);
 
-	cout << d.VerifyAccount("12345678", "123456") << d.VerifyAccount("12345678", "654321") << d.VerifyUser("admin", "admin");
+	//PrintAccountInfo(d, "12345678", ".\\12345678.txt");
+	//PrintAccountLog(d, "12345678", ".\\12345678.log");
 
+	//PrintAccountList(d, ".\\account.txt");
+	//PrintAccountLog(d, ".\\log.log");
 	//ptree pt;
 	//read_xml(Config::get().GetLogicConfigPath(), pt);
 	//

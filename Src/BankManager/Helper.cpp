@@ -34,6 +34,7 @@ const std::array<std::string, 256> uCharHexTable =
   "e4", "e5", "e6", "e7", "e8", "e9", "ea", "eb", "ec", "ed", "ee", "ef",
   "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "fa", "fb",
   "fc", "fd", "fe", "ff" };
+  //unsigned char转HEX字符串表
 
 inline byte Hex2uChar(const char &high, const char &low)
 {
@@ -48,11 +49,12 @@ inline byte Hex2uChar(const char &high, const char &low)
 	return ret;
 
 }
+//将一对HEX char转回unsigned  char(byte)
 
 namespace helper
 {
 
-
+	//SHA-1 Hash函数, 输出为hex字符串
 	string SHA1(const string &msg)
 	{
 		byte* ResultBytes = new byte[_SHA1.DigestSize()];
@@ -69,11 +71,12 @@ namespace helper
 
 		return s.str();
 	}
-
+	
+	//AES－128－CBC 加密算法
 	string AES_128_EncryptHex(const string &plain, const string &key, const string &iv)
 	{	
 #ifdef NO_AES
-		return plain;
+		return plain; // Only for debug
 #endif
 		byte bkey[CryptoPP::AES::DEFAULT_KEYLENGTH], biv[CryptoPP::AES::BLOCKSIZE];
 
@@ -97,7 +100,8 @@ namespace helper
 		return cipherTextHex;
 
 	}
-
+	
+	//AES-128-CBC解密算法，要求输入字符串为Hex字符串
 	string AES_128_DecryptHex(string cipherHex, const string &key, const string &iv)
 	{	
 
@@ -109,7 +113,7 @@ namespace helper
 		for (size_t i = 0; i < CryptoPP::AES::DEFAULT_KEYLENGTH; ++i) bkey[i] = key[i];
 		for (size_t i = 0; i < CryptoPP::AES::BLOCKSIZE; ++i) biv[i] = iv[i];
 
-		boost::trim(cipherHex);
+		boost::trim(cipherHex);//去除空白字符
 		string cipherText(cipherHex.size() / 2, '\0');
 		for (size_t i = 0; i < cipherHex.size(); i += 2){
 			cipherText[i / 2] = Hex2uChar(cipherHex[i], cipherHex[i + 1]);
@@ -126,13 +130,15 @@ namespace helper
 
 		return plainText;
 	}
-
+	
+	//初始化Log
+	
     void InitLog()
 	{
 		boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
 		boost::log::add_file_log(
-			boost::log::keywords::file_name = ".\\logs\\%Y-%m-%d_%H-%M-%S.%N.log",
-			boost::log::keywords::format = "[%TimeStamp%] (%Severity%) : %Message%"
+			boost::log::keywords::file_name = ".\\logs\\%Y-%m-%d_%H-%M-%S.%N.log", //Log路径
+			boost::log::keywords::format = "[%TimeStamp%] (%Severity%) : %Message%" // Log格式
 			);
 		boost::log::add_common_attributes();
 
@@ -140,4 +146,3 @@ namespace helper
 	}
 
 }
-

@@ -11,7 +11,7 @@ namespace controller
 	{
 		if (AdministratorList.count(name) && AdministratorList.at(name).PasswordHash == SHA1(password)) return true;
 		if (BankTellerList.count(name) && BankTellerList.at(name).PasswordHash == SHA1(password)) return true;
-
+		//同时在两个列表中查找用户，优先管理员列表
 		return false;
 	}
 
@@ -71,7 +71,8 @@ namespace controller
 
 		return ret;
 	}
-
+	
+	//采用AES－128－CBC加密账户数据
 	ptree DataController::GetAccountListPtree() const
 	{
 		ptree ret;
@@ -79,12 +80,13 @@ namespace controller
 			ret.add(AccountListPath, AES_128_EncryptHex(i.second.ToString(), Config::get().AESKey, Config::get().AESIV));
 			for (auto j : i.second.CurrencyAccountList) {
 				ret.add(AccountListCAPath, AES_128_EncryptHex(j.ToString(), Config::get().AESKey, Config::get().AESIV));
-			}
+			}//针对每一个子账户单独存储
 		}
-
+		
 		return ret;
 	}
-
+	
+	//采用AES-128-CBC加密交易记录
 	ptree DataController::GetTotalRecordPtree() const
 	{
 		ptree ret;
@@ -147,7 +149,12 @@ namespace controller
 		TotalRecord.clear();
 		auto child = XMLtree.get_child(TotalRecordRoot);
 		for (auto &i : child) {
-			TotalRecord.emplace_back(AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));
+			TotalRecord.emplace_back(AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV)); //采用移动构造函数，减少一次复制
+		}
+		
+		RecordByAccount.clear();
+		for(auto i:TotalRecord) {
+			RecordByAccount[i.Number].emplace_back(i);
 		}
 
 	}
