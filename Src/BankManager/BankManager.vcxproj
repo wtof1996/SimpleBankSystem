@@ -68,16 +68,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Controller\AccountController.cpp" />
     <ClCompile Include="Controller\DataController.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Controller\IOController.cpp" />
     <ClCompile Include="Controller\md5.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model\Config.cpp" />
+    <ClCompile Include="View\AdministratorView.cpp" />
+    <ClCompile Include="View\BankTellerView.cpp" />
     <ClCompile Include="View\cli.cpp" />
     <ClCompile Include="View\MainView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Controller\AccountController.hpp" />
     <ClInclude Include="Controller\DataController.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="Controller\IOController.hpp" />
@@ -85,6 +89,8 @@
     <ClInclude Include="Model\BasicModel.hpp" />
     <ClInclude Include="Model\Config.hpp" />
     <ClInclude Include="Model\UserModel.hpp" />
+    <ClInclude Include="View\AdministratorView.hpp" />
+    <ClInclude Include="View\BankTellerView.hpp" />
     <ClInclude Include="View\BaseView.hpp" />
     <ClInclude Include="View\cli.hpp" />
     <ClInclude Include="View\MainView.hpp" />

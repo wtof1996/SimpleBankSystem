@@ -46,7 +46,7 @@ namespace controller
 
 		bool VerifyUser(const string& name, const string& password) const; //用户校验
 		bool VerifyAccount(const string& number, const string& password) const; //账户校验
-		const model::User& GetUser(const string& name) const; //根据用户名获取一个用户
+	    model::User& GetUser(const string& name); //根据用户名获取一个用户
 		void UpdateUser(model::User &u);				//更新用户信息
 		
 		//P.S:整个系统中，用户指柜员和管理员，账户指银行账户，即客户

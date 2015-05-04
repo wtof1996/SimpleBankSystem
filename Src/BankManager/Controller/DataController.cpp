@@ -21,7 +21,7 @@ namespace controller
 		return false;
 	}
 
-	const model::User& DataController::GetUser(const string &name) const
+	model::User& DataController::GetUser(const string &name)
 	{
 		if (AdministratorList.count(name)) return AdministratorList.at(name);
 		if (BankTellerList.count(name)) return BankTellerList.at(name);

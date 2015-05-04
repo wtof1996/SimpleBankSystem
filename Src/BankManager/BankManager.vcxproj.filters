@@ -39,6 +39,15 @@
     <ClCompile Include="View\MainView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="View\BankTellerView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="View\AdministratorView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller\AccountController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="View\cli.hpp">
@@ -69,6 +78,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="View\BaseView.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\BankTellerView.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\AdministratorView.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller\AccountController.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -321,13 +321,13 @@
 	<boost/log/sources/severity_logger.hpp>
 	<boost/log/sources/record_ostream.hpp>
 
-1430635501 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
+1430730224 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
 	"DataController.hpp"
 	"..\Helper.hpp"
 	<stdexcept>
 	<iostream>
 
-1430668195 i:\c++design\src\bankmanager\controller\datacontroller.hpp
+1430730231 i:\c++design\src\bankmanager\controller\datacontroller.hpp
 	<map>
 	<string>
 	<vector>
@@ -362,7 +362,7 @@
 	<string>
 	<boost\program_options.hpp>
 
-1430276242 i:\c++design\src\bankmanager\model\usermodel.hpp
+1430731284 i:\c++design\src\bankmanager\model\usermodel.hpp
 	<string>
 	"..\Helper.hpp"
 
@@ -406,11 +406,11 @@
 	<stdexcept>
 	<boost\locale.hpp>
 
-1430671854 source:i:\c++design\src\bankmanager\view\cli.cpp
+1430755786 source:i:\c++design\src\bankmanager\view\cli.cpp
 	"cli.hpp"
 	<algorithm>
 
-1430672111 i:\c++design\src\bankmanager\view\cli.hpp
+1430755796 i:\c++design\src\bankmanager\view\cli.hpp
 	<iostream>
 	<string>
 	<boost\regex.hpp>
@@ -440,8 +440,10 @@
 	"Controller\IOController.hpp"
 	"View\MainView.hpp"
 
-1430671325 source:i:\c++design\src\bankmanager\view\mainview.cpp
+1430756931 source:i:\c++design\src\bankmanager\view\mainview.cpp
 	"MainView.hpp"
+	"BankTellerView.hpp"
+	"AdministratorView.hpp"
 	<string>
 
 1430670987 i:\c++design\src\bankmanager\view\mainview.hpp
@@ -451,4 +453,30 @@
 	"..\Controller\IOController.hpp"
 
 1430670981 i:\c++design\src\bankmanager\view\baseview.hpp
+
+1430732400 source:i:\c++design\src\bankmanager\view\administratorview.cpp
+	"AdministratorView.hpp"
+	"cli.hpp"
+
+1430757100 i:\c++design\src\bankmanager\view\administratorview.hpp
+	"BaseView.hpp"
+	"..\Controller\DataController.hpp"
+	"..\Model\UserModel.hpp"
+	<boost\log\trivial.hpp>
+	"cli.hpp"
+
+1430732384 source:i:\c++design\src\bankmanager\view\banktellerview.cpp
+	"BankTellerView.hpp"
+	"cli.hpp"
+
+1430732516 i:\c++design\src\bankmanager\view\banktellerview.hpp
+	"BaseView.hpp"
+	"..\Model\UserModel.hpp"
+	<boost\log\trivial.hpp>
+
+1430756781 source:i:\c++design\src\bankmanager\controller\accountcontroller.cpp
+	"AccountController.hpp"
+
+1430733642 i:\c++design\src\bankmanager\controller\accountcontroller.hpp
+	"..\Model\BasicModel.hpp"
 

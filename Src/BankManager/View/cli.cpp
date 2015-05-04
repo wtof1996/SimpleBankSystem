@@ -40,7 +40,7 @@ namespace CLI
 		return input;
 	}
 
-	size_t ShowChooseList(const string &msg, std::initializer_list<string> list)
+	size_t ShowChooseList(const string &msg, std::vector<string> &list)
 	{
 		ShowMsg(msg);
 		BOOST_LOG_TRIVIAL(info) << "ChooseList Showed";

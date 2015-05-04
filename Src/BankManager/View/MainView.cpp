@@ -1,5 +1,9 @@
 #include "MainView.hpp"
+#include "BankTellerView.hpp"
+#include "AdministratorView.hpp"
 #include <string>
+
+using std::string;
 
 namespace view
 {
@@ -18,6 +22,26 @@ namespace view
 
 	void MainView::Login()
 	{
+		string name, password;
 
+		name = CLI::GetInput("用户名:");
+		password = CLI::GetInput("密码:");
+
+		if (!Data.VerifyUser(name, password)) {
+			CLI::ShowMsg("用户名或密码错误!");
+			BOOST_LOG_TRIVIAL(warning) << "Log in failed, User Name:" << name;
+			return;
+		}
+
+		model::User& user = Data.GetUser(name);
+
+		if (user.isAdmin()) {
+			AdministratorView Admin(user, &Data);
+			while (Admin.Loop) Admin.Show();
+		}
+		else {
+			BankTellerView Teller(user);
+			while (Teller.Loop) Teller.Show();
+		}
 	}
 }

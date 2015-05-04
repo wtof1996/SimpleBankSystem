@@ -36,21 +36,29 @@ namespace model
 			FromString(serial);
 		}
 
+		User(const User&) = default;
+
         virtual ~User() = default;
 	};
-	
+
 	//柜员
 	class BankTeller : public User
 	{
 	public:
 		using User::User;
+		BankTeller() = default;
+		BankTeller(User& u)
+            :User(u) {}
 	};
-	
+
 	//管理员
 	class Administrator : public User
 	{
     public:
 		using User::User;
+		Administrator() = default;
+		Administrator(User& u)
+            :User(u) {}
         virtual bool isAdmin() { return true;}
 	};
 }

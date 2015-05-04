@@ -71,7 +71,7 @@ namespace CLI
 	void ShowBoxMsg(const string &msg, const char border = '*');
 	//显示一个消息框
 
-	size_t ShowChooseList(const string &msg, std::initializer_list<string> list);
+	size_t ShowChooseList(const string &msg, std::vector<string> &list);
 	//显示一个选择列表
 
 	string GetInput(const string &direction);
