@@ -190,7 +190,7 @@ namespace model
 		string Description = "";//备注
 		boost::posix_time::ptime Time = boost::posix_time::not_a_date_time;//交易时间
 
-		Record(const string &number, const string & name, const string & src, model::Currency cur, const string & desc, boost::posix_time::ptime time)
+		Record(const string &number, const string & name, const string & src, model::Currency cur, const string & desc, boost::posix_time::ptime time = boost::posix_time::second_clock::local_time())
 			:Number(number), Name(name), Source(src), Currency(cur), Description(desc), Time(time) { }
 
         Record(const string &serial)

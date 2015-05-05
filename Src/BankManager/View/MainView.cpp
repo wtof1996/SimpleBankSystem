@@ -40,7 +40,7 @@ namespace view
 			while (Admin.Loop) Admin.Show();
 		}
 		else {
-			BankTellerView Teller(user);
+			BankTellerView Teller(user, &Data);
 			while (Teller.Loop) Teller.Show();
 		}
 	}

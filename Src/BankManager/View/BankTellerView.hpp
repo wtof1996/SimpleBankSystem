@@ -5,6 +5,7 @@
 
 #include "BaseView.hpp"
 #include "..\Model\UserModel.hpp"
+#include "..\Controller\DataController.hpp"
 #include <boost\log\trivial.hpp>
 
 namespace view
@@ -13,9 +14,10 @@ namespace view
 	{
 	public:
 		model::BankTeller User;
+		controller::DataController* Data;
 
-		BankTellerView(model::User &user)
-			:User(user)
+		BankTellerView(model::User &user, controller::DataController *d)
+			:User(user), Data(d)
 		{
 			BOOST_LOG_TRIVIAL(info) << "BankTeller " << User.Name << " logged in.";
 		}
@@ -27,6 +29,10 @@ namespace view
 
 		void Show() override;
 		void LogOff() { Loop = false; }
+
+		void Transffer();
+		void ForeignExchange();
+		void AccountManage();
 
 
 	};

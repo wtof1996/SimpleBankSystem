@@ -336,7 +336,7 @@
 	"..\Model\UserModel.hpp"
 	<boost\property_tree\ptree.hpp>
 
-1430276058 i:\c++design\src\bankmanager\model\basicmodel.hpp
+1430839054 i:\c++design\src\bankmanager\model\basicmodel.hpp
 	<string>
 	<vector>
 	<boost\date_time\gregorian\gregorian.hpp>
@@ -362,7 +362,7 @@
 	<string>
 	<boost\program_options.hpp>
 
-1430731284 i:\c++design\src\bankmanager\model\usermodel.hpp
+1430831312 i:\c++design\src\bankmanager\model\usermodel.hpp
 	<string>
 	"..\Helper.hpp"
 
@@ -423,7 +423,7 @@
 	<sstream>
 	<boost\locale.hpp>
 
-1430671250 source:i:\c++design\src\bankmanager\main.cpp
+1430832662 source:i:\c++design\src\bankmanager\main.cpp
 	<stdexcept>
 	<string>
 	<vector>
@@ -454,9 +454,15 @@
 
 1430670981 i:\c++design\src\bankmanager\view\baseview.hpp
 
-1430732400 source:i:\c++design\src\bankmanager\view\administratorview.cpp
+1430759146 source:i:\c++design\src\bankmanager\view\administratorview.cpp
 	"AdministratorView.hpp"
 	"cli.hpp"
+	"..\Helper.hpp"
+	<string>
+	<stdexcept>
+	<boost\filesystem.hpp>
+	<boost\format.hpp>
+	"..\Controller\IOController.hpp"
 
 1430757100 i:\c++design\src\bankmanager\view\administratorview.hpp
 	"BaseView.hpp"
@@ -469,9 +475,10 @@
 	"BankTellerView.hpp"
 	"cli.hpp"
 
-1430732516 i:\c++design\src\bankmanager\view\banktellerview.hpp
+1430841402 i:\c++design\src\bankmanager\view\banktellerview.hpp
 	"BaseView.hpp"
 	"..\Model\UserModel.hpp"
+	"..\Controller\DataController.hpp"
 	<boost\log\trivial.hpp>
 
 1430756781 source:i:\c++design\src\bankmanager\controller\accountcontroller.cpp

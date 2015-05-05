@@ -7,9 +7,27 @@ namespace view
 		CLI::ShowMenu(
 			*this,
 			{
-			    { "退出", [](BankTellerView &v) {v.LogOff(); } }
+			    { "账户管理", [](BankTellerView &v) {v.LogOff(); } },
+				{ "转账", [](BankTellerView &v) {v.LogOff(); } },
+				{ "外汇兑换", [](BankTellerView &v) {v.LogOff(); } },
+				{ "退出", [](BankTellerView &v) {v.LogOff(); } }
             },
-			"柜员菜单"
+			"柜员： " + User.Name
         );
+	}
+
+	void BankTellerView::Transffer()
+	{
+
+	}
+
+	void BankTellerView::ForeignExchange()
+	{
+
+	}
+
+	void BankTellerView::AccountManage()
+	{
+
 	}
 }

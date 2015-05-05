@@ -193,6 +193,14 @@ namespace controller
 	void DataController::UpdateAccount(const model::Account& account, const std::vector<model::Record>& record)
 	{
 		AccountList[account.Number] = account;
+
+		const auto &oldrec = RecordByAccount[account.Number];
+
+		if (oldrec.size() < record.size()) {
+			for (auto i = record.begin() + oldrec.size() + 1; i != record.end(); ++i)
+				TotalRecord.push_back(*i);
+		}
+
 		RecordByAccount[account.Number] = record;
 	}
 
