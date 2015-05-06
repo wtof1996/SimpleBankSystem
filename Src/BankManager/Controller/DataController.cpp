@@ -71,7 +71,7 @@ namespace controller
 
 		return ret;
 	}
-	
+
 	//采用AES－128－CBC加密账户数据
 	ptree DataController::GetAccountListPtree() const
 	{
@@ -82,10 +82,10 @@ namespace controller
 				ret.add(AccountListCAPath, AES_128_EncryptHex(j.ToString(), Config::get().AESKey, Config::get().AESIV));
 			}//针对每一个子账户单独存储
 		}
-		
+
 		return ret;
 	}
-	
+
 	//采用AES-128-CBC加密交易记录
 	ptree DataController::GetTotalRecordPtree() const
 	{
@@ -151,7 +151,7 @@ namespace controller
 		for (auto &i : child) {
 			TotalRecord.emplace_back(AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV)); //采用移动构造函数，减少一次复制
 		}
-		
+
 		RecordByAccount.clear();
 		for(auto i:TotalRecord) {
 			RecordByAccount[i.Number].emplace_back(i);
@@ -193,15 +193,13 @@ namespace controller
 	void DataController::UpdateAccount(const model::Account& account, const std::vector<model::Record>& record)
 	{
 		AccountList[account.Number] = account;
-
-		const auto &oldrec = RecordByAccount[account.Number];
-
-		if (oldrec.size() < record.size()) {
-			for (auto i = record.begin() + oldrec.size() + 1; i != record.end(); ++i)
-				TotalRecord.push_back(*i);
-		}
-
 		RecordByAccount[account.Number] = record;
+	}
+
+	void DataController::AddRecord(const model::Record& record, bool addAccount)
+	{
+		TotalRecord.push_back(record);
+		if(addAccount) RecordByAccount[record.Number].push_back(record);
 	}
 
 	void DataController::UpdateForeignExchangeRate(const string& code, const model::ForeignExchange& fex)

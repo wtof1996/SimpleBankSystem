@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <fstream>
 #include <string>
 #include <vector>
 #include "View\cli.hpp"
@@ -42,7 +43,6 @@ catch(std::exception &e)
 BOOST_SCOPE_EXIT(void){
 	BOOST_LOG_TRIVIAL(info) << "Program stopped";
 }BOOST_SCOPE_EXIT_END
-
 	return 0;
 
 }

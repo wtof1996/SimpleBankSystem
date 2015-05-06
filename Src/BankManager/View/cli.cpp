@@ -40,7 +40,7 @@ namespace CLI
 		return input;
 	}
 
-	size_t ShowChooseList(const string &msg, std::vector<string> &list)
+	size_t ShowChooseList(const string &msg, const std::vector<string> &list)
 	{
 		ShowMsg(msg);
 		BOOST_LOG_TRIVIAL(info) << "ChooseList Showed";
@@ -50,7 +50,7 @@ namespace CLI
 		cout << endl;
 
 		size_t index = 0;
-		for (auto &i : list) {
+		for (auto i : list) {
 
 			ShowMsg("[" + std::to_string(++index) + "] : " + i);
 

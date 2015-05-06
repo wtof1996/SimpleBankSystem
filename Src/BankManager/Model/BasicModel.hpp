@@ -215,8 +215,9 @@ namespace model
 			Number = t[0]; Name = t[1]; Source = t[2];
 			Currency = model::Currency(t[3], t[4], stod(t[5]));
 			Time = boost::posix_time::from_iso_string(t[6]);
+			Description = t[7];
 		}
-		string ToString() { return CombineString(Number, Name, Source, Currency.ToString(), boost::posix_time::to_iso_string(Time) ); }
+		string ToString() { return CombineString(Number, Name, Source, Currency.ToString(), boost::posix_time::to_iso_string(Time), Description); }
 	};
 
 }

@@ -16,9 +16,4 @@ namespace view
 
 	};
 }
-
-
-
-
-
 //#endif // BASEVIEW_HPP_INCLUDED

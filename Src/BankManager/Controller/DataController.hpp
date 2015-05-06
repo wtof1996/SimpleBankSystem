@@ -48,7 +48,7 @@ namespace controller
 		bool VerifyAccount(const string& number, const string& password) const; //账户校验
 	    model::User& GetUser(const string& name); //根据用户名获取一个用户
 		void UpdateUser(model::User &u);				//更新用户信息
-		
+
 		//P.S:整个系统中，用户指柜员和管理员，账户指银行账户，即客户
 
 		ptree GetForeignExchangePtree() const;
@@ -75,7 +75,9 @@ namespace controller
 		void SetUserList(const ptree& XMLtree);
 		void SetAccountList(const ptree& XMLtree);
 		//根据XML中的ptree设置各项数据
-		
+
+		void AddRecord(const model::Record& record, bool addAccount = false);
+		//增加单条记录
 		void UpdateAccount(const model::Account& account, const std::vector<model::Record>& record);
 		//更新账户信息
 		void UpdateForeignExchangeRate(const string& code, const model::ForeignExchange& fex);
