@@ -14,6 +14,7 @@ namespace view
 		CLI::ShowMenu(
 			*this,
 			{
+				{ "开户", [](BankTellerView &v) {v.NewAccount(); } },
 			    { "账户管理", [](BankTellerView &v) {v.AccountManage(); } },
 				{ "电汇", [](BankTellerView &v) {v.Transffer(); } },
 				{ "外汇兑换", [](BankTellerView &v) {v.ForeignExchange(); } },
@@ -108,6 +109,47 @@ namespace view
 		Data->AddRecord(rec, true);
 
 		controller::io::WriteAccountLog(*Data);
+	}
+
+	void BankTellerView::NewAccount()
+	{
+		string name = CLI::GetInput("请输入户名:"),
+			   number = CLI::GetInput("请输入卡号:", boost::regex("^\\d{8}")),
+			   amount = CLI::GetInput("请输入开户金额(定点两位小数):", boost::regex("^\\d*.\\d{2}"));
+
+		CLI::ShowBoxMsg("即将开设 " + number + " 账户" + "户名: " + name + " 金额: " + amount + " 元");
+		string choose = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+
+		if (choose == "N" || choose == "n") return;
+
+		string password,password2nd;
+
+		do {
+			password = CLI::GetInput("请输入6位数字作为新密码:", boost::regex("^\\d{6}"));
+			password2nd	= CLI::GetInput("请再输入一次以确认密码无误:");
+		} while (password != password2nd && (CLI::ShowMsg("两次密码不一致，请重试"), true));
+
+		model::Account acc(number, name, helper::SHA1(password));
+		model::CurrencyAccount ca;
+		ca.Currency = model::MainCurrency;
+		ca.Currency.Amount = std::stod(amount);
+		ca.DespoitType = Data->GetDeposit("活期");
+		ca.LastUpdateDate = boost::gregorian::day_clock::local_day();
+		ca.Period = decltype(ca.Period)(ca.LastUpdateDate, ca.LastUpdateDate);
+
+		acc.CurrencyAccountList.push_back(ca);
+
+		model::Record rec(number, name, "开户", ca.Currency, "");
+		std::vector<model::Record> accRec;
+		accRec.push_back(rec);
+
+		Data->UpdateAccount(acc, accRec);
+		Data->AddRecord(rec);
+		CLI::ShowMsg("操作已成功完成");
+
+		controller::io::WriteAccountData(*Data);
+		controller::io::WriteAccountLog(*Data);
+
 	}
 
 	void BankTellerView::AccountManage()

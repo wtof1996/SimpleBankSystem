@@ -73,6 +73,8 @@
 		<Unit filename="Model/Config.cpp" />
 		<Unit filename="Model/Config.hpp" />
 		<Unit filename="Model/UserModel.hpp" />
+		<Unit filename="View/AccountManageView.cpp" />
+		<Unit filename="View/AccountManageView.hpp" />
 		<Unit filename="View/AdministratorView.cpp" />
 		<Unit filename="View/AdministratorView.hpp" />
 		<Unit filename="View/BankTellerView.cpp" />

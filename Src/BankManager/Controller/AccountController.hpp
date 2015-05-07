@@ -25,6 +25,7 @@ namespace controller
 		double UpdateCurrencyAccount(int index, double amount, bool save = true); //存取款
 		void NewCurrencyAccount(model::CurrencyAccount &acc);  //开立新的子货币账户
 		double DelCurrencyAccount(int index);  //销去新的子货币账户
+		void ChangePassword(const std::string &pwd) { Account.PasswordHash = helper::SHA1(pwd); }
 
     };
 }

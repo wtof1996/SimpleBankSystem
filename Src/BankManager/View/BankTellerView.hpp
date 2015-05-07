@@ -33,6 +33,7 @@ namespace view
 		void Transffer();
 		void ForeignExchange();
 		void AccountManage();
+		void NewAccount();
 
 
 	};

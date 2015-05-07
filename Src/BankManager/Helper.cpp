@@ -2,6 +2,8 @@
 
 #include <array>
 #include <iostream>
+#include <random>
+#include <ctime>
 
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
@@ -71,10 +73,10 @@ namespace helper
 
 		return s.str();
 	}
-	
+
 	//AES－128－CBC 加密算法
 	string AES_128_EncryptHex(const string &plain, const string &key, const string &iv)
-	{	
+	{
 #ifdef NO_AES
 		return plain; // Only for debug
 #endif
@@ -100,10 +102,10 @@ namespace helper
 		return cipherTextHex;
 
 	}
-	
+
 	//AES-128-CBC解密算法，要求输入字符串为Hex字符串
 	string AES_128_DecryptHex(string cipherHex, const string &key, const string &iv)
-	{	
+	{
 
 #ifdef NO_AES
 		return cipherHex;
@@ -130,9 +132,9 @@ namespace helper
 
 		return plainText;
 	}
-	
+
 	//初始化Log
-	
+
     void InitLog()
 	{
 		boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
@@ -145,4 +147,15 @@ namespace helper
 		BOOST_LOG_TRIVIAL(info) << "Log Start";
 	}
 
+	static std::mt19937 eng(static_cast<unsigned long>(time(nullptr)));
+	const int CardNumberLength = 8;
+
+	string CardNumberGenerator()
+	{
+		std::uniform_int_distribution<char> dist('0', '9');
+		string ret;
+		for (int i = 0; i < CardNumberLength; ++i)
+			ret.push_back(dist(eng));
+		return ret;
+	}
 }

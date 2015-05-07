@@ -64,6 +64,8 @@ namespace helper
 		return t + "|" + CombineString(rest...); //递归展开参数包
 	}
 
+	string CardNumberGenerator();
+	//随机生成卡号
 
 }
 

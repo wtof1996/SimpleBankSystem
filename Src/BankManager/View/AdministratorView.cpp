@@ -75,7 +75,7 @@ namespace view
 		string name, password, password2nd;
 
 		name = CLI::GetInput("请输入柜员名称:");
-		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需大于6位:", boost::regex("^\\w{6}\\w*"));
+		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需不少于6位:", boost::regex("^\\w{6}\\w*"));
 		password2nd = CLI::GetInput("请再输入一次以确认密码无误:");
 
 		if (password != password2nd) {

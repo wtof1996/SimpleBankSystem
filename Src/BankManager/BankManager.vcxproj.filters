@@ -48,6 +48,9 @@
     <ClCompile Include="Controller\AccountController.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="View\AccountManageView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="View\cli.hpp">
@@ -87,6 +90,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Controller\AccountController.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="View\AccountManageView.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
