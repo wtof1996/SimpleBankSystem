@@ -28,7 +28,9 @@ namespace controller
 		, TotalRecordPath = TotalRecordRoot + ".Record"
 		, AccountListRoot = "AccountList"
 		, AccountListPath = AccountListRoot + ".Account"
-		, AccountListCAPath = AccountListPath + ".CurrencyAccount";
+		, AccountListCAPath = AccountListPath + ".CurrencyAccount"
+		, AccountPath = "Account"
+		, AccountCAPath = "CurrencyAccount";
 	//XML路径
 	class DataController
 	{

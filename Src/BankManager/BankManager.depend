@@ -321,13 +321,13 @@
 	<boost/log/sources/severity_logger.hpp>
 	<boost/log/sources/record_ostream.hpp>
 
-1430928784 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
+1431275606 source:i:\c++design\src\bankmanager\controller\datacontroller.cpp
 	"DataController.hpp"
 	"..\Helper.hpp"
 	<stdexcept>
 	<iostream>
 
-1430927385 i:\c++design\src\bankmanager\controller\datacontroller.hpp
+1431276027 i:\c++design\src\bankmanager\controller\datacontroller.hpp
 	<map>
 	<string>
 	<vector>
@@ -344,7 +344,7 @@
 	<boost\date_time\posix_time\posix_time.hpp>
 	"..\Helper.hpp"
 
-1430267278 i:\c++design\src\bankmanager\helper.hpp
+1430983515 i:\c++design\src\bankmanager\helper.hpp
 	<string>
 	<sstream>
 	<vector>
@@ -385,10 +385,12 @@
 	<boost\log\trivial.hpp>
 	"DataController.hpp"
 
-1430840734 source:i:\c++design\src\bankmanager\helper.cpp
+1431016520 source:i:\c++design\src\bankmanager\helper.cpp
 	"Helper.hpp"
 	<array>
 	<iostream>
+	<random>
+	<ctime>
 	<boost/log/trivial.hpp>
 	<boost/log/expressions.hpp>
 	<boost/log/utility/setup/file.hpp>
@@ -423,8 +425,9 @@
 	<sstream>
 	<boost\locale.hpp>
 
-1430832662 source:i:\c++design\src\bankmanager\main.cpp
+1430929375 source:i:\c++design\src\bankmanager\main.cpp
 	<stdexcept>
+	<fstream>
 	<string>
 	<vector>
 	"View\cli.hpp"
@@ -454,7 +457,7 @@
 
 1430928567 i:\c++design\src\bankmanager\view\baseview.hpp
 
-1430759146 source:i:\c++design\src\bankmanager\view\administratorview.cpp
+1430984133 source:i:\c++design\src\bankmanager\view\administratorview.cpp
 	"AdministratorView.hpp"
 	"cli.hpp"
 	"..\Helper.hpp"
@@ -471,14 +474,15 @@
 	<boost\log\trivial.hpp>
 	"cli.hpp"
 
-1430928326 source:i:\c++design\src\bankmanager\view\banktellerview.cpp
+1431060650 source:i:\c++design\src\bankmanager\view\banktellerview.cpp
 	"BankTellerView.hpp"
 	"cli.hpp"
 	<string>
 	<boost\format.hpp>
 	"..\Controller\IOController.hpp"
+	"AccountManageView.hpp"
 
-1430841402 i:\c++design\src\bankmanager\view\banktellerview.hpp
+1430982165 i:\c++design\src\bankmanager\view\banktellerview.hpp
 	"BaseView.hpp"
 	"..\Model\UserModel.hpp"
 	"..\Controller\DataController.hpp"
@@ -489,6 +493,17 @@
 	<boost\log\trivial.hpp>
 	<stdexcept>
 
-1430840672 i:\c++design\src\bankmanager\controller\accountcontroller.hpp
+1431060532 i:\c++design\src\bankmanager\controller\accountcontroller.hpp
 	"..\Model\BasicModel.hpp"
+
+1431061028 source:i:\c++design\src\bankmanager\view\accountmanageview.cpp
+	"AccountManageView.hpp"
+	"cli.hpp"
+
+1431061012 i:\c++design\src\bankmanager\view\accountmanageview.hpp
+	"BaseView.hpp"
+	"..\Controller\AccountController.hpp"
+	"..\Model\BasicModel.hpp"
+	"..\Controller\DataController.hpp"
+	<boost\log\trivial.hpp>
 

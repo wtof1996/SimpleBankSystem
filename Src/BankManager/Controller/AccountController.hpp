@@ -20,8 +20,9 @@ namespace controller
 		}
 
 		model::Account GetAccount() { return Account; }
+		std::vector<model::Record> GetRecord() { return Record; }
 
-		void UpdateAmount(); //计息
+		void UpdateAmount(); //计息 
 		double UpdateCurrencyAccount(int index, double amount, bool save = true); //存取款
 		void NewCurrencyAccount(model::CurrencyAccount &acc);  //开立新的子货币账户
 		double DelCurrencyAccount(int index);  //销去新的子货币账户

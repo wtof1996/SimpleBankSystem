@@ -8,14 +8,14 @@ namespace view
 		CLI::ShowMenu(
 				*this,
 				{
-					{ "´æ¿î" , [](AccountManageView &v) { v.Deposit(); } },
-					{ "È¡¿î", [](AccountManageView &v) { v.Withdrawal(); } },
-					{ "×ªÕË", [](AccountManageView &v) { v.Transffer(); } },
-					{ "Ïú»§", [](AccountManageView &v) { v.CloseAccount(); } },
-					{ "¸ü¸ÄÃÜÂë", [](AccountManageView &v) { v.CloseAccount(); } },
-					{ "ÍË³ö", [](AccountManageView &v) { v.Logoff(); } },
+					{ "å­˜æ¬¾" , [](AccountManageView &v) { v.Deposit(); } },
+					{ "å–æ¬¾", [](AccountManageView &v) { v.Withdrawal(); } },
+					{ "è½¬è´¦", [](AccountManageView &v) { v.Transffer(); } },
+					{ "é”€æˆ·", [](AccountManageView &v) { v.CloseAccount(); } },
+					{ "æ›´æ”¹å¯†ç ", [](AccountManageView &v) { v.CloseAccount(); } },
+					{ "é€€å‡º", [](AccountManageView &v) { v.Logoff(); } },
 				},
-				"¿Í»§: " + Controller->GetAccount().Name
+				"å®¢æˆ·: " + Controller->GetAccount().Name
 		);
 	}
 
@@ -44,13 +44,13 @@ namespace view
 		std::string password, password2nd;
 
 		do {
-			password = CLI::GetInput("ÇëÊäÈë6Î»Êı×Ö×÷ÎªĞÂÃÜÂë:", boost::regex("^\\d{6}"));
-			password2nd = CLI::GetInput("ÇëÔÙÊäÈëÒ»´ÎÒÔÈ·ÈÏÃÜÂëÎŞÎó:");
-		} while (password != password2nd && (CLI::ShowMsg("Á½´ÎÃÜÂë²»Ò»ÖÂ£¬ÇëÖØÊÔ"), true));
+			password = CLI::GetInput("è¯·è¾“å…¥6ä½æ•°å­—ä½œä¸ºæ–°å¯†ç :", boost::regex("^\\d{6}"));
+			password2nd = CLI::GetInput("è¯·å†è¾“å…¥ä¸€æ¬¡ä»¥ç¡®è®¤å¯†ç æ— è¯¯:");
+		} while (password != password2nd && (CLI::ShowMsg("ä¸¤æ¬¡å¯†ç ä¸ä¸€è‡´ï¼Œè¯·é‡è¯•"), true));
 
 		Controller->ChangePassword(password);
 
-		CLI::ShowMsg("²Ù×÷³É¹¦");
+		CLI::ShowMsg("æ“ä½œæˆåŠŸ");
 	}
 
 }

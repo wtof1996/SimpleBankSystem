@@ -77,10 +77,13 @@ namespace controller
 	{
 		ptree ret;
 		for (auto i : AccountList){
-			ret.add(AccountListPath, AES_128_EncryptHex(i.second.ToString(), Config::get().AESKey, Config::get().AESIV));
+			ptree acc;
+			acc.put_value(AES_128_EncryptHex(i.second.ToString(), Config::get().AESKey, Config::get().AESIV));
 			for (auto j : i.second.CurrencyAccountList) {
-				ret.add(AccountListCAPath, AES_128_EncryptHex(j.ToString(), Config::get().AESKey, Config::get().AESIV));
+				acc.add(AccountCAPath, AES_128_EncryptHex(j.ToString(), Config::get().AESKey, Config::get().AESIV));
 			}//针对每一个子账户单独存储
+
+			ret.add_child(AccountListPath, acc);
 		}
 
 		return ret;
@@ -180,9 +183,9 @@ namespace controller
 	{
 		auto child = XMLtree.get_child(AccountListRoot);
 		for (auto &i : child) {
-            model::Account tmp((AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV)));
+			model::Account tmp((AES_128_DecryptHex(i.second/*.get_child(AccountDAPath)*/.get_value<string>(), Config::get().AESKey, Config::get().AESIV)));
 			AccountList[tmp.Number] = tmp;
-			auto &child_list = i.second;
+			auto &child_list = i.second/*.get_child(AccountCASPath)*/;
 			auto &acc = AccountList[tmp.Number];
 			for (auto &j : child_list) {
 				acc.CurrencyAccountList.emplace_back(AES_128_DecryptHex(j.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));

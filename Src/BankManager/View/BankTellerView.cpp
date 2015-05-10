@@ -4,6 +4,7 @@
 #include <boost\format.hpp>
 
 #include "..\Controller\IOController.hpp"
+#include "AccountManageView.hpp"
 
 using std::string;
 
@@ -122,6 +123,15 @@ namespace view
 
 		if (choose == "N" || choose == "n") return;
 
+		try {
+			model::Account acc = Data->GetAccount(number);
+			CLI::ShowMsg("操作失败，账号已存在");
+			return;
+		}
+		catch (std::invalid_argument &e) {
+			
+		}
+
 		string password,password2nd;
 
 		do {
@@ -154,6 +164,24 @@ namespace view
 
 	void BankTellerView::AccountManage()
 	{
+		string number = CLI::GetInput("卡号:", boost::regex("^\\d{8}"));
+		string password = CLI::GetInput("密码:", boost::regex("^\\d{6}"));
+
+		if (!Data->VerifyAccount(number, password)) {
+			CLI::ShowMsg("卡号或密码错误!");
+
+			BOOST_LOG_TRIVIAL(warning) << "Log in failed, Account Number:" << number;
+			return;
+		}
+
+		model::Account acc = Data->GetAccount(number);
+		auto accRec = Data->GetAccountRecord(number);
+
+		controller::AccountController Controller(acc, Data->GetDeposit("活期").IRPerYear, accRec);
+
+		AccountManageView view(Data, &Controller);
+
+		while (view.Loop) view.Show();
 
 	}
 }
