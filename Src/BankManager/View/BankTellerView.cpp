@@ -5,22 +5,11 @@
 
 #include "..\Controller\IOController.hpp"
 #include "AccountManageView.hpp"
-#include <boost\filesystem.hpp>
 
 using std::string;
 
-string _GetPath()
-{
-	string input;
-	do{
-		input = CLI::GetInput("请输入路径");
-	} while (!boost::filesystem::exists(boost::filesystem::path(input).branch_path()) && (CLI::ShowMsg("无效的路径，请重新输入"), true));
-
-	return input;
-}
-
 namespace view
-{	
+{
 	void BankTellerView::Show()
 	{
 		CLI::ShowMenu(
@@ -28,8 +17,6 @@ namespace view
 			{
 				{ "开户", [](BankTellerView &v) {v.NewAccount(); } },
 			    { "账户管理", [](BankTellerView &v) {v.AccountManage(); } },
-				{ "账户信息打印", [](BankTellerView &v) {  } },
-				{ "账户详单打印", [](BankTellerView &v) { } },
 				{ "电汇", [](BankTellerView &v) {v.Transffer(); } },
 				{ "外汇兑换", [](BankTellerView &v) {v.ForeignExchange(); } },
 				{ "退出", [](BankTellerView &v) {v.LogOff(); } }
@@ -56,7 +43,6 @@ namespace view
 		}
 		catch (std::invalid_argument &e) {
 			CLI::ShowMsg("操作失败，查无此户");
-			return;
 		}
 
 		auto accRecord = Data->GetAccountRecord(number);
@@ -197,45 +183,5 @@ namespace view
 
 		while (view.Loop) view.Show();
 
-		if(!Controller.Closed)Data->UpdateAccount(Controller.GetAccount(), Controller.GetRecord());
-		controller::io::WriteAccountData(*Data);
-		controller::io::WriteAccountLog(*Data);
-
-	}
-
-	void BankTellerView::PrintAccountInfo()
-	{
-		string number = CLI::GetInput("卡号:", boost::regex("^\\d{8}"));
-		string password = CLI::GetInput("密码:", boost::regex("^\\d{6}"));
-
-		if (!Data->VerifyAccount(number, password)) {
-			CLI::ShowMsg("卡号或密码错误!");
-
-			BOOST_LOG_TRIVIAL(warning) << "Log in failed, Account Number:" << number;
-			return;
-		}
-		string path = _GetPath();
-		
-		controller::io::PrintAccountInfo(*Data, number, path);
-
-		CLI::ShowMsg("已成功打印账户信息");
-	}
-
-	void BankTellerView::PrintAccountRecord()
-	{
-
-		string number = CLI::GetInput("卡号:", boost::regex("^\\d{8}"));
-		string password = CLI::GetInput("密码:", boost::regex("^\\d{6}"));
-
-		if (!Data->VerifyAccount(number, password)) {
-			CLI::ShowMsg("卡号或密码错误!");
-
-			BOOST_LOG_TRIVIAL(warning) << "Log in failed, Account Number:" << number;
-			return;
-		}
-		string path = _GetPath();
-
-		controller::io::PrintAccountLog(*Data, number, path);
-		CLI::ShowMsg("已成功打印账户交易记录");
 	}
 }

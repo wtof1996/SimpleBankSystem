@@ -45,10 +45,12 @@ namespace view
 		for (auto i : FEList) {
 			list.emplace_back(i.second.Name + ": " + (boost::format("%.4lf") % i.second.Rate).str());
 		}
+
+		auto size = FEList.size();
 		list.emplace_back("退出");
 
 		auto choose = CLI::ShowChooseList("请选择需要更改的外汇：", list);
-		if (choose == FEList.size() + 1) return;
+		if (choose == size + 1) return;
 
 		double rate = std::stod(CLI::GetInput("请输入汇率(1外汇:人民币，小数四位):", boost::regex("^\\d*\\.\\d{4}")));
 

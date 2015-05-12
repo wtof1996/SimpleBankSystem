@@ -13,65 +13,65 @@ namespace controller
 		for (auto &i : Account.CurrencyAccountList) {
 			double interest;
 			auto days = now - i.LastUpdateDate;
-			if (i.DespoitType.Duration == boost::date_time::not_a_date_time && !days.is_negative()) //æ´»æœŸ
+			if (i.DespoitType.Duration == boost::date_time::not_a_date_time && !days.is_negative()) //»îÆÚ
 				interest = i.DespoitType.IRPerYear / 360 / 100 * days.days() * i.Currency.Amount;
-			else if (i.Period.contains(now)) continue; //æœªåˆ°è®¡æ¯æ—¥
-			else { //å·²ç»è¿‡äº†è®¡æ¯æ—¥
-				if (i.Period.contains(i.LastUpdateDate)) { //é€¾æœŸå­˜æ¬¾æŒ‰æ´»æœŸè®¡æ¯
+			else if (i.Period.contains(now)) continue; //Î´µ½¼ÆÏ¢ÈÕ
+			else { //ÒÑ¾­¹ıÁË¼ÆÏ¢ÈÕ
+				if (i.Period.contains(i.LastUpdateDate)) { //ÓâÆÚ´æ¿î°´»îÆÚ¼ÆÏ¢
 					if (!days.is_negative()) interest = DemandRate / 360 / 100 * days.days() * i.Currency.Amount;
 				}
-				else { //æœªè®¡æ¯
+				else { //Î´¼ÆÏ¢
 					interest = i.DespoitType.IRPerYear / 12 / 100 * i.DespoitType.Duration.number_of_months().as_number() * i.Currency.Amount;
 					if (!days.is_negative()) interest += DemandRate / 360 / 100 * days.days() * i.Currency.Amount;
 				}
 			}
 
-			if (interest > MinimumAmount) { //å¤§äºæœ€å°åˆ†åº¦æ‰è®¡æ¯
+			if (interest > MinimumAmount) { //´óÓÚ×îĞ¡·Ö¶È²Å¼ÆÏ¢
 				i.Currency.Amount += interest;
 
-				Record.emplace_back(Account.Number, Account.Name, "åˆ©æ¯", model::Currency(i.Currency.Name, i.Currency.Code, interest), "");
+				Record.emplace_back(Account.Number, Account.Name, "ÀûÏ¢", model::Currency(i.Currency.Name, i.Currency.Code, interest), "");
 			}
 
 			i.LastUpdateDate = now;
 		}
 	}
 
-	double AccountController::UpdateCurrencyAccount(size_t index, double amount, bool save)
+	double AccountController::UpdateCurrencyAccount(int index, double amount, bool save)
 	{
 		auto &acc = Account.CurrencyAccountList[index];
 		if (save) {
 			acc.Currency.Amount += amount;
 
-			Record.emplace_back(Account.Number, Account.Name, "ç°å­˜", model::Currency(acc.Currency.Name, acc.Currency.Code, amount), "");
+			Record.emplace_back(Account.Number, Account.Name, "ÏÖ´æ", model::Currency(acc.Currency.Name, acc.Currency.Code, amount), "");
 		}
 		else {
 			auto now = boost::gregorian::day_clock::local_day();
 			auto days = now - acc.LastUpdateDate;
 			if (amount > acc.Currency.Amount) throw std::invalid_argument("Insufficient account balance");
-			if (acc.DespoitType.Duration == boost::date_time::not_a_date_time || !acc.Period.contains(now)) { //æ´»æœŸæˆ–å·²é€¾æœŸçš„å®šæœŸå­˜æ¬¾
+			if (acc.DespoitType.Duration == boost::date_time::not_a_date_time || !acc.Period.contains(now)) { //»îÆÚ»òÒÑÓâÆÚµÄ¶¨ÆÚ´æ¿î
 				acc.Currency.Amount -= amount;
-				Record.emplace_back(Account.Number, Account.Name, "å–ç°", model::Currency(acc.Currency.Name, acc.Currency.Code, -amount), "");
+				Record.emplace_back(Account.Number, Account.Name, "È¡ÏÖ", model::Currency(acc.Currency.Name, acc.Currency.Code, -amount), "");
 			}
-			else { //æå‰æ”¯å–
+			else { //ÌáÇ°Ö§È¡
 				 
 				acc.Currency.Amount -= amount;
 				amount += DemandRate / 360 / 100 * days.days() * amount;
 
-				Record.emplace_back(Account.Number, Account.Name, "å–ç°", model::Currency(acc.Currency.Name, acc.Currency.Code, -amount), "å®šæœŸå­˜æ¬¾æå‰æ”¯å–");
+				Record.emplace_back(Account.Number, Account.Name, "È¡ÏÖ", model::Currency(acc.Currency.Name, acc.Currency.Code, -amount), "¶¨ÆÚ´æ¿îÌáÇ°Ö§È¡");
 			}
 		}
 
 		return amount;
 	}
 
-	void AccountController::NewCurrencyAccount(const model::CurrencyAccount &acc)
+	void AccountController::NewCurrencyAccount(model::CurrencyAccount &acc)
 	{
 		Account.CurrencyAccountList.push_back(acc);
 
-		Record.emplace_back(Account.Number, Account.Name, "å¼€æˆ·", acc.Currency, "");
+		Record.emplace_back(Account.Number, Account.Name, "¿ª»§", acc.Currency, "");
 	}
 
-	double AccountController::DelCurrencyAccount(size_t index)
+	double AccountController::DelCurrencyAccount(int index)
 	{
 		auto acc = Account.CurrencyAccountList[index];
 		double amount = acc.Currency.Amount;
@@ -84,16 +84,10 @@ namespace controller
 
 		Account.CurrencyAccountList.erase(Account.CurrencyAccountList.begin() + index);
 
-		Record.emplace_back(Account.Number, Account.Name, "é”€æˆ·", acc.Currency, "");
+		Record.emplace_back(Account.Number, Account.Name, "Ïú»§", acc.Currency, "");
 
 		return amount;
 
-	}
 
-	void AccountController::Transfer(std::string target, double amount)
-	{
-		Account.CurrencyAccountList[0].Currency.Amount -= amount;
-		Record.emplace_back(Account.Number, Account.Name, "è½¬è´¦", model::Currency(model::MainCurrency.Name, model::MainCurrency.Code, -1 * (amount)), "ç›®æ ‡å¡å·:" + target);
 	}
-
 }

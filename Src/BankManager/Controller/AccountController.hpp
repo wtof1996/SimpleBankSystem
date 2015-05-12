@@ -13,8 +13,6 @@ namespace controller
 		model::Account Account;
 		double DemandRate;
     public:
-		bool Closed = false;
-
         AccountController(model::Account& acc, double demand, decltype(Record) &rec)
 			:Account(acc), DemandRate(demand), Record(rec)
 		{
@@ -24,13 +22,11 @@ namespace controller
 		model::Account GetAccount() { return Account; }
 		std::vector<model::Record> GetRecord() { return Record; }
 
-		void UpdateAmount(); //è®¡æ¯ 
-		double UpdateCurrencyAccount(size_t index, double amount, bool save = true); //å­˜å–æ¬¾
-		void NewCurrencyAccount(const model::CurrencyAccount &acc);  //å¼€ç«‹æ–°çš„å­è´§å¸è´¦æˆ·
-		double DelCurrencyAccount(size_t index);  //é”€å»æ–°çš„å­è´§å¸è´¦æˆ·
+		void UpdateAmount(); //¼ÆÏ¢ 
+		double UpdateCurrencyAccount(int index, double amount, bool save = true); //´æÈ¡¿î
+		void NewCurrencyAccount(model::CurrencyAccount &acc);  //¿ªÁ¢ĞÂµÄ×Ó»õ±ÒÕË»§
+		double DelCurrencyAccount(int index);  //ÏúÈ¥ĞÂµÄ×Ó»õ±ÒÕË»§
 		void ChangePassword(const std::string &pwd) { Account.PasswordHash = helper::SHA1(pwd); }
-		void AddRecord(const model::Record &r) { Record.push_back(r); }
-		void Transfer(std::string target, double amount); // è½¬è´¦
 
     };
 }
