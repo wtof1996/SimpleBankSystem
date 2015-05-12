@@ -35,6 +35,9 @@ namespace view
 		void AccountManage();
 		void NewAccount();
 
+		void PrintAccountInfo();
+		void PrintAccountRecord();
+
 
 	};
 

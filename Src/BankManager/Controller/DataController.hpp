@@ -47,6 +47,7 @@ namespace controller
 		~DataController() = default;
 
 		bool VerifyUser(const string& name, const string& password) const; //用户校验
+		void DelAccount(const string& number);
 		bool VerifyAccount(const string& number, const string& password) const; //账户校验
 	    model::User& GetUser(const string& name); //根据用户名获取一个用户
 		void UpdateUser(model::User &u);				//更新用户信息

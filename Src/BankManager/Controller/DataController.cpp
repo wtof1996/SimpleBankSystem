@@ -21,6 +21,12 @@ namespace controller
 		return false;
 	}
 
+	void DataController::DelAccount(const string& number)
+	{
+		auto iter = AccountList.find(number);
+		if (iter != AccountList.end()) AccountList.erase(iter);
+	}
+
 	model::User& DataController::GetUser(const string &name)
 	{
 		if (AdministratorList.count(name)) return AdministratorList.at(name);
@@ -183,9 +189,9 @@ namespace controller
 	{
 		auto child = XMLtree.get_child(AccountListRoot);
 		for (auto &i : child) {
-			model::Account tmp((AES_128_DecryptHex(i.second/*.get_child(AccountDAPath)*/.get_value<string>(), Config::get().AESKey, Config::get().AESIV)));
+			model::Account tmp((AES_128_DecryptHex(i.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV)));
 			AccountList[tmp.Number] = tmp;
-			auto &child_list = i.second/*.get_child(AccountCASPath)*/;
+			auto &child_list = i.second;
 			auto &acc = AccountList[tmp.Number];
 			for (auto &j : child_list) {
 				acc.CurrencyAccountList.emplace_back(AES_128_DecryptHex(j.second.get_value<string>(), Config::get().AESKey, Config::get().AESIV));

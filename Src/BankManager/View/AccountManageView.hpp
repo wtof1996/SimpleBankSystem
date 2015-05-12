@@ -32,6 +32,7 @@ namespace view
 		void Deposit();
 		void Withdrawal();
 		void Transffer();
+		void NewCurrencyAccount();
 		void CloseAccount();
 		void ChangePassword();
 		void Logoff() { Loop = false; }
