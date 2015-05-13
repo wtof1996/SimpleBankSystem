@@ -1,20 +1,27 @@
-#include "AdministratorView.hpp"
-#include "cli.hpp"
-#include "..\Helper.hpp"
 #include <string>
 #include <stdexcept>
 
 #include <boost\filesystem.hpp>
 #include <boost\format.hpp>
+
+#include "cli.hpp"
+#include "..\Helper.hpp"
+
 #include "..\Controller\IOController.hpp"
 
-using std::string;
+#include "AdministratorView.hpp"
 
-string GetPath()
+using std::string;
+using boost::regex;
+using boost::format;
+using std::stod;
+using std::to_string;
+
+inline string GetPath()
 {
 	string input;
 	do{
-		input = CLI::GetInput("请输入路径");
+		input = CLI::GetInput("请输入路径:");
 	} while (!boost::filesystem::exists(boost::filesystem::path(input).branch_path()) && (CLI::ShowMsg("无效的路径，请重新输入"), true));
 
 	return input;
@@ -43,14 +50,14 @@ namespace view
 		auto FEList = Data->GetForeignExchangeList();
 		std::vector<string> list;
 		for (auto i : FEList) {
-			list.emplace_back(i.second.Name + ": " + (boost::format("%.4lf") % i.second.Rate).str());
+			list.emplace_back(i.second.Name + ": " + (format("%.4lf") % i.second.Rate).str());
 		}
 		list.emplace_back("退出");
 
 		auto choose = CLI::ShowChooseList("请选择需要更改的外汇：", list);
 		if (choose == FEList.size() + 1) return;
 
-		double rate = std::stod(CLI::GetInput("请输入汇率(1外汇:人民币，小数四位):", boost::regex("^\\d*\\.\\d{4}")));
+		double rate = std::stod(CLI::GetInput("请输入汇率(1外汇:人民币，小数四位):", regex("^\\d*\\.\\d{4}")));
 
 		decltype(choose) iter = 0;
 		for (auto i : FEList) {
@@ -73,7 +80,7 @@ namespace view
 		string name, password, password2nd;
 
 		name = CLI::GetInput("请输入柜员名称:");
-		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需不少于6位:", boost::regex("^\\w{6}\\w*"));
+		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需不少于6位:", regex("^\\w{6}\\w*"));
 		password2nd = CLI::GetInput("请再输入一次以确认密码无误:");
 
 		if (password != password2nd) {
@@ -91,7 +98,7 @@ namespace view
 		}
 		catch (std::invalid_argument& e)
 		{
-			string choose = CLI::GetInput("该柜员不存在，是否需要新增柜员？(Y/N)", boost::regex("^[yYnN]"));
+			string choose = CLI::GetInput("该柜员不存在，是否需要新增柜员？(Y/N)", regex("^[yYnN]"));
 
 			if (choose == "N" || choose == "n") return;
 		}
@@ -127,7 +134,7 @@ namespace view
 		string name, password, password2nd;
 
 		name = CLI::GetInput("请输入管理员名称:");
-		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需大于6位:", boost::regex("^\\w{6}\\w*"));
+		password = CLI::GetInput("请输入新密码, 只能由字母和数字组成，长度需大于6位:", regex("^\\w{6}\\w*"));
 		password2nd = CLI::GetInput("请再输入一次以确认密码无误:");
 
 		if (password != password2nd) {
@@ -145,7 +152,7 @@ namespace view
 		}
 		catch (std::invalid_argument& e)
 		{
-			string choose = CLI::GetInput("该管理员不存在，是否需要新增管理员？(Y/N)", boost::regex("^[yYnN]"));
+			string choose = CLI::GetInput("该管理员不存在，是否需要新增管理员？(Y/N)", regex("^[yYnN]"));
 
 			if (choose == "N" || choose == "n") return;
 		}

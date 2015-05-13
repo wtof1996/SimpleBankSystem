@@ -38,10 +38,12 @@ namespace view
 		if (user.isAdmin()) {
 			AdministratorView Admin(user, &Data);
 			while (Admin.Loop) Admin.Show();
+			CLI::CleanCLI();
 		}
 		else {
 			BankTellerView Teller(user, &Data);
 			while (Teller.Loop) Teller.Show();
+			CLI::CleanCLI();
 		}
 	}
 }

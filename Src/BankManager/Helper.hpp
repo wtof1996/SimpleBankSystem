@@ -7,26 +7,14 @@
 #include <sstream>
 #include <vector>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-function"
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall"
-
 #include <cryptopp\cryptlib.h>
 #include <cryptopp\sha.h>
 #include <cryptopp\aes.h>
 #include <cryptopp\modes.h>
 #include <cryptopp\filters.h>
+
 #include <boost\algorithm\string.hpp>
 
-#pragma GCC diagnostic pop
-#pragma GCC diagnostic pop
-#pragma GCC diagnostic pop
-#pragma GCC diagnostic pop
 
 namespace helper
 {
@@ -63,10 +51,6 @@ namespace helper
 	{
 		return t + "|" + CombineString(rest...); //递归展开参数包
 	}
-
-	string CardNumberGenerator();
-	//随机生成卡号
-
 }
 
 //#endif // HELPER_HPP_INCLUDED

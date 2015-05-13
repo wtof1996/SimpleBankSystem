@@ -1,9 +1,12 @@
 #pragma once
 
-#include <string>
-#include "..\Helper.hpp"
 //#ifndef USERMODEL_HPP_INCLUDED
 //#define USERMODEL_HPP_INCLUDED
+
+#include <string>
+
+#include "..\Helper.hpp"
+
 
 
 namespace model

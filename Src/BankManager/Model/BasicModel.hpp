@@ -15,7 +15,12 @@ namespace model
 	using std::string;
 	using helper::SplitModelString;
 	using helper::CombineString;
-	
+	using boost::date_time::not_a_date_time;
+
+	namespace date = boost::gregorian;
+    namespace time = boost::posix_time;
+
+
 	//货币类，用于表示实际的货币
 	class Currency
 	{
@@ -49,7 +54,7 @@ namespace model
 
 	static const Currency MainCurrency = Currency("人民币", "CNY");
 	//主要货币
-	
+
 	//外汇类, 表示一种外汇
 	class ForeignExchange
 	{
@@ -79,21 +84,21 @@ namespace model
 
 		string ToString() { return CombineString(Name, Code, std::to_string(Rate)); }
 	};
-	
+
 	//存款业务类，表示一种存款业务
 	class Deposit
 	{
 	public:
 		string Name = ""; //业务名称
 		double IRPerYear = NAN; //年利率
-		boost::gregorian::months Duration = boost::date_time::not_a_date_time; //存期，为方便计算按月数存储
+		boost::gregorian::months Duration = not_a_date_time; //存期，为方便计算按月数存储
 		//活期则表示为not_a_date_time
         Deposit(const string& serial)
         {
             FromString(serial);
         }
 
-		Deposit(const string & name, double rate, const decltype(Duration) &duration = boost::date_time::not_a_date_time)
+		Deposit(const string & name, double rate, const decltype(Duration) &duration = not_a_date_time)
 			:Name(name), IRPerYear(rate), Duration(duration) { }
 
         Deposit() = default;
@@ -104,21 +109,21 @@ namespace model
         void FromString(const string &str)
 		{
 			auto t = SplitModelString(str);
-			Name = t[0]; IRPerYear = stod(t[1]); Duration = boost::gregorian::months(stoi(t[2]));
+			Name = t[0]; IRPerYear = stod(t[1]); Duration = date::months(stoi(t[2]));
 		}
 
 		string ToString() { return CombineString(Name, std::to_string(IRPerYear),
 							std::to_string(Duration.number_of_months().as_number())); }
 	};
-	
+
 	//货币账户，表示用某种货币存储的子账户
 	class CurrencyAccount
 	{
 	public:
 		Currency Currency; //货币
 		Deposit DespoitType; //存款业务类型
-		boost::gregorian::date_period Period {boost::gregorian::date(), boost::gregorian::date()}; //存期起止时间，活期为相同时间 
-		boost::gregorian::date LastUpdateDate {boost::date_time::not_a_date_time}; //上一次计算利息的日期
+		boost::gregorian::date_period Period {date::date(), date::date()}; //存期起止时间，活期为相同时间
+		boost::gregorian::date LastUpdateDate {not_a_date_time}; //上一次计算利息的日期
 
 		CurrencyAccount(const string &serial)
 		{
@@ -134,18 +139,19 @@ namespace model
 		{
 			auto t = SplitModelString(str);
 			Currency = model::Currency(t[0], t[1], stod(t[2]));
-			DespoitType = Deposit(t[3], stod(t[4]), boost::gregorian::months(stoi(t[5])));
-			Period = boost::gregorian::date_period(
-				boost::gregorian::date(boost::gregorian::from_undelimited_string(t[6])),
-				boost::gregorian::date(boost::gregorian::from_undelimited_string(t[7]))
+			DespoitType = Deposit(t[3], stod(t[4]), date::months(stoi(t[5])));
+			Period = date::date_period(
+				date::date(date::from_undelimited_string(t[6])),
+				date::date(date::from_undelimited_string(t[7]))
 				);
-			LastUpdateDate = boost::gregorian::date(boost::gregorian::from_undelimited_string(t[8]));
+			LastUpdateDate = date::date(boost::gregorian::from_undelimited_string(t[8]));
 
 		}
 
 		string ToString() { return CombineString(Currency.ToString(), DespoitType.ToString(),
-							boost::gregorian::to_iso_string(Period.begin()), boost::gregorian::to_iso_string(Period.end()),
-							boost::gregorian::to_iso_string(LastUpdateDate)); }
+									date::to_iso_string(Period.begin()), date::to_iso_string(Period.end()),
+									date::to_iso_string(LastUpdateDate));
+		}
 
 	};
 	//账户类，即客户的银行账户
@@ -157,7 +163,8 @@ namespace model
 		string PasswordHash = ""; //SHA-1后的密码
 		std::vector<CurrencyAccount> CurrencyAccountList = decltype(CurrencyAccountList)();
 		//子货币账户列表
-		Account(const string & number, const string & name, const string & pwd, decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
+		Account(const string & number, const string & name, const string & pwd,
+				 decltype(CurrencyAccountList) list = decltype(CurrencyAccountList)())
 			: Number(number), Name(name), PasswordHash(pwd), CurrencyAccountList(list) { }
 
 		Account(const string &serial)
@@ -190,7 +197,8 @@ namespace model
 		string Description = "";//备注
 		boost::posix_time::ptime Time = boost::posix_time::not_a_date_time;//交易时间
 
-		Record(const string &number, const string & name, const string & src, model::Currency cur, const string & desc, boost::posix_time::ptime time = boost::posix_time::second_clock::local_time())
+		Record(const string &number, const string & name, const string & src, model::Currency cur,
+				const string & desc, time::ptime time = time::second_clock::local_time())
 			:Number(number), Name(name), Source(src), Currency(cur), Description(desc), Time(time) { }
 
         Record(const string &serial)
@@ -214,10 +222,11 @@ namespace model
 			auto t = SplitModelString(str);
 			Number = t[0]; Name = t[1]; Source = t[2];
 			Currency = model::Currency(t[3], t[4], stod(t[5]));
-			Time = boost::posix_time::from_iso_string(t[6]);
+			Time =time::from_iso_string(t[6]);
 			Description = t[7];
 		}
-		string ToString() { return CombineString(Number, Name, Source, Currency.ToString(), boost::posix_time::to_iso_string(Time), Description); }
+		string ToString() { return CombineString(Number, Name, Source, Currency.ToString(),
+									time::to_iso_string(Time), Description); }
 	};
 
 }

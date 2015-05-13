@@ -1,5 +1,3 @@
-#include "Helper.hpp"
-
 #include <array>
 #include <iostream>
 #include <random>
@@ -12,6 +10,7 @@
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 
+#include "Helper.hpp"
 
 const std::array<std::string, 256> uCharHexTable =
 { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b",
@@ -147,15 +146,6 @@ namespace helper
 		BOOST_LOG_TRIVIAL(info) << "Log Start";
 	}
 
-	static std::mt19937 eng(static_cast<unsigned long>(time(nullptr)));
-	const int CardNumberLength = 8;
 
-	string CardNumberGenerator()
-	{
-		std::uniform_int_distribution<char> dist('0', '9');
-		string ret;
-		for (int i = 0; i < CardNumberLength; ++i)
-			ret.push_back(dist(eng));
-		return ret;
-	}
+	const int CardNumberLength = 8;
 }

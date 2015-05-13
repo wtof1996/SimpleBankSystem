@@ -1,10 +1,15 @@
-#include "AccountManageView.hpp"
-#include "cli.hpp"
-#include "..\Controller\IOController.hpp"
-
 #include <boost\format.hpp>
 
+#include "..\Controller\IOController.hpp"
+
+#include "cli.hpp"
+#include "AccountManageView.hpp"
+
 using std::string;
+using boost::regex;
+using boost::format;
+using std::stod;
+using std::to_string;
 
 namespace view
 {
@@ -31,7 +36,7 @@ namespace view
 		std::vector<string> list;
 
 		for (auto i : acc.CurrencyAccountList) {
-			list.emplace_back(i.Currency.Name + "账户, 余额:" + (boost::format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
+			list.emplace_back(i.Currency.Name + "账户, 余额:" + (format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
 		}
 
 		list.emplace_back("退出");
@@ -40,14 +45,14 @@ namespace view
 
 		auto &CA = acc.CurrencyAccountList[choose - 1];
 
-		string amount = CLI::GetInput("请输入金额(定点两位小数):", boost::regex("^\\d*.\\d{2}"));
+		string amount = CLI::GetInput("请输入金额(定点两位小数):", regex("^\\d*.\\d{2}"));
 
 		CLI::ShowBoxMsg("即将对 " + CA.Currency.Name + " 账户存入 " + amount + " 元");
-		string res = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+		string res = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 		if (res == "N" || res == "n") return;
 
-		Controller->UpdateCurrencyAccount(choose - 1, std::stod(amount));
+		Controller->UpdateCurrencyAccount(choose - 1, stod(amount));
 
 		Data->AddRecord(Controller->GetRecord().back());
 
@@ -64,7 +69,7 @@ namespace view
 		std::vector<string> list;
 
 		for (auto i : acc.CurrencyAccountList) {
-			list.emplace_back(i.Currency.Name + "账户, 余额:" + (boost::format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
+			list.emplace_back(i.Currency.Name + "账户, 余额:" + (format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
 		}
 
 		list.emplace_back("退出");
@@ -73,21 +78,21 @@ namespace view
 
 		auto &CA = acc.CurrencyAccountList[choose - 1];
 
-		string amount = CLI::GetInput("请输入金额(定点两位小数):", boost::regex("^\\d*.\\d{2}"));
+		string amount = CLI::GetInput("请输入金额(定点两位小数):", regex("^\\d*.\\d{2}"));
 
 		CLI::ShowBoxMsg("即将对 " + CA.Currency.Name + " 账户取现 " + amount + " 元");
-		string res = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+		string res = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 		if (res == "N" || res == "n") return;
 
-		if (CA.Currency.Amount < std::stod(amount)) {
+		if (CA.Currency.Amount < stod(amount)) {
 			CLI::ShowMsg("账户余额不足, 操作取消");
 			return;
 		}
 
-		auto finalAmount = Controller->UpdateCurrencyAccount(choose - 1, std::stod(amount), false);
+		auto finalAmount = Controller->UpdateCurrencyAccount(choose - 1, stod(amount), false);
 
-		CLI::ShowMsg("请给付 " + CA.Currency.Name + (boost::format("%.2lf") % finalAmount).str() + " 元");
+		CLI::ShowMsg("请给付 " + CA.Currency.Name + (format("%.2lf") % finalAmount).str() + " 元");
 
 		Data->AddRecord(Controller->GetRecord().back());
 
@@ -99,11 +104,11 @@ namespace view
 
 	void AccountManageView::Transffer()
 	{
-		string number = CLI::GetInput("请输入转入的卡号:", boost::regex("^\\d{8}"));
-		string amount = CLI::GetInput("请输入金额(定点两位小数):", boost::regex("^\\d*.\\d{2}"));
+		string number = CLI::GetInput("请输入转入的卡号:", regex("^\\d{8}"));
+		string amount = CLI::GetInput("请输入金额(定点两位小数):", regex("^\\d*.\\d{2}"));
 
 		CLI::ShowBoxMsg("即将从本账户对 " + number + " 账户转入 " + amount + " 元");
-		string choose = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+		string choose = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 		if (choose == "N" || choose == "n") return;
 
@@ -117,23 +122,23 @@ namespace view
 			return;
 		}
 
-		if (acc.CurrencyAccountList[0].Currency.Amount < std::stod(amount)) {
+		if (acc.CurrencyAccountList[0].Currency.Amount < stod(amount)) {
 			CLI::ShowMsg("默认活期账户余额不足, 操作取消");
 			return;
 		}
 
 		auto targetAccRecord = Data->GetAccountRecord(number);
 
-		targetAcc.CurrencyAccountList[0].Currency.Amount += std::stod(amount);
-		Controller->Transfer(number, std::stod(amount));
+		targetAcc.CurrencyAccountList[0].Currency.Amount += stod(amount);
+		Controller->Transfer(number, stod(amount));
 
-		model::Record rec(number, targetAcc.Name, "转入", model::Currency(model::MainCurrency.Name, model::MainCurrency.Code, std::stod(amount)), "来源卡号:" + acc.Number);
-		
+		model::Record rec(number, targetAcc.Name, "转入", model::Currency(model::MainCurrency.Name, model::MainCurrency.Code, stod(amount)), "来源卡号:" + acc.Number);
+
 		targetAccRecord.push_back(rec);
 
 		Data->AddRecord(Controller->GetRecord().back());
 		Data->AddRecord(rec);
-		
+
 		Data->UpdateAccount(targetAcc, targetAccRecord);
 
 		CLI::ShowMsg("操作已成功完成");
@@ -171,7 +176,7 @@ namespace view
 		list.clear();
 
 		for (auto i : DPList) {
-			list.emplace_back(i.second.Name + " 利率: " + std::to_string(i.second.IRPerYear) + "%");
+			list.emplace_back(i.second.Name + " 利率: " + to_string(i.second.IRPerYear) + "%");
 		}
 		list.emplace_back("退出");
 
@@ -187,15 +192,15 @@ namespace view
 			}
 		}
 
-		string amount = CLI::GetInput("请输入金额(定点两位小数):", boost::regex("^\\d*.\\d{2}"));
+		string amount = CLI::GetInput("请输入金额(定点两位小数):", regex("^\\d*.\\d{2}"));
 
 		CLI::ShowBoxMsg("即将开设 " + CA.Currency.Name + " 账户 " + "存款类型: " + CA.DespoitType.Name + " 金额: " + amount + " 元");
-		string choose = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+		string choose = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 		if (choose == "N" || choose == "n") return;
-		
-		CA.Currency.Amount = std::stod(amount);
-		CA.LastUpdateDate = boost::gregorian::day_clock::local_day();
+
+		CA.Currency.Amount = stod(amount);
+		CA.LastUpdateDate = model::date::day_clock::local_day();
 		CA.Period = decltype(CA.Period)(CA.LastUpdateDate, CA.LastUpdateDate);
 
 		Controller->NewCurrencyAccount(CA);
@@ -211,22 +216,22 @@ namespace view
 		std::vector<string> list;
 
 		for (auto i : acc.CurrencyAccountList) {
-			list.emplace_back(i.Currency.Name + "账户, 余额:" + (boost::format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
+			list.emplace_back(i.Currency.Name + "账户, 余额:" + (format("%.2lf") % i.Currency.Amount).str() + " 存期:" + i.DespoitType.Name);
 		}
 
 		list.emplace_back("退出");
 		auto choose = CLI::ShowChooseList("请选择需要销去的账户：", list);
-		if (choose == list.size() + 1) return; 
+		if (choose == list.size() + 1) return;
 		if (choose == 1) { //默认活期账户
 			CLI::ShowBoxMsg("即将销去整个账户!");
-			string res = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+			string res = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 			if (res == "N" || res == "n") return;
 
 			size_t size = acc.CurrencyAccountList.size();
 			for (auto i = 0u; i < size; ++i) {
 				auto amount = Controller->DelCurrencyAccount(0);
-				CLI::ShowMsg("请给付" + acc.CurrencyAccountList[i].Currency.Name + (boost::format("%.2lf") % amount).str() + "元");
+				CLI::ShowMsg("请给付" + acc.CurrencyAccountList[i].Currency.Name + (format("%.2lf") % amount).str() + "元");
 				Data->AddRecord(Controller->GetRecord().back());
 			}
 
@@ -235,12 +240,12 @@ namespace view
 		}
 		else {
 			CLI::ShowBoxMsg("即将销去" + acc.CurrencyAccountList[choose - 1].Currency.Name + "账户!");
-			string res = CLI::GetInput("是否继续？(Y/N)", boost::regex("^[yYnN]"));
+			string res = CLI::GetInput("是否继续？(Y/N)", regex("^[yYnN]"));
 
 			if (res == "N" || res == "n") return;
 
 			auto amount = Controller->DelCurrencyAccount(choose - 1);
-			CLI::ShowMsg("请给付" + acc.CurrencyAccountList[choose - 1].Currency.Name + (boost::format("%.2lf") % amount).str() + "元");
+			CLI::ShowMsg("请给付" + acc.CurrencyAccountList[choose - 1].Currency.Name + (format("%.2lf") % amount).str() + "元");
 			Data->AddRecord(Controller->GetRecord().back());
 		}
 
@@ -257,7 +262,7 @@ namespace view
 		std::string password, password2nd;
 
 		do {
-			password = CLI::GetInput("请输入6位数字作为新密码:", boost::regex("^\\d{6}"));
+			password = CLI::GetInput("请输入6位数字作为新密码:", regex("^\\d{6}"));
 			password2nd = CLI::GetInput("请再输入一次以确认密码无误:");
 		} while (password != password2nd && (CLI::ShowMsg("两次密码不一致，请重试"), true));
 

@@ -3,11 +3,14 @@
 //#ifndef ACCOUNTMANAGEVIEW_HPP
 //#define ACCOUNTMANAGEVIEW_HPP
 
-#include "BaseView.hpp"
-#include "..\Controller\AccountController.hpp"
-#include "..\Model\BasicModel.hpp"
-#include "..\Controller\DataController.hpp"
 #include <boost\log\trivial.hpp>
+
+#include "..\Model\BasicModel.hpp"
+
+#include "..\Controller\AccountController.hpp"
+#include "..\Controller\DataController.hpp"
+
+#include "BaseView.hpp"
 
 namespace view
 {

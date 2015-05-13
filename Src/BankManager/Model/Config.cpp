@@ -1,10 +1,12 @@
-#include "Config.hpp"
-#include "..\View\cli.hpp"
 #include <iostream>
+#include <stdexcept>
+
 #include <boost\log\trivial.hpp>
 #include <boost\filesystem.hpp>
 #include <boost\filesystem\fstream.hpp>
-#include <stdexcept>
+
+#include "Config.hpp"
+#include "..\View\cli.hpp"
 
 #ifdef CONV_UTF8_GBK
 #include <boost\locale.hpp>

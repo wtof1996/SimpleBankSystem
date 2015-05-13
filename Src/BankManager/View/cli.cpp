@@ -1,5 +1,4 @@
 #include "cli.hpp"
-#include <algorithm>
 
 namespace CLI
 {

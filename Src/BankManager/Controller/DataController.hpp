@@ -6,10 +6,13 @@
 #include <map>
 #include <string>
 #include <vector>
+
+#include <boost\property_tree\ptree.hpp>
+
 #include "..\Model\BasicModel.hpp"
 #include "..\Model\Config.hpp"
 #include "..\Model\UserModel.hpp"
-#include <boost\property_tree\ptree.hpp>
+
 
 namespace controller
 {

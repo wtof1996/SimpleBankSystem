@@ -8,12 +8,12 @@ namespace controller
 {
 	void AccountController::UpdateAmount()
 	{
-		auto now = boost::gregorian::day_clock::local_day();
+		auto now = model::date::day_clock::local_day();
 
 		for (auto &i : Account.CurrencyAccountList) {
 			double interest;
 			auto days = now - i.LastUpdateDate;
-			if (i.DespoitType.Duration == boost::date_time::not_a_date_time && !days.is_negative()) //活期
+			if (i.DespoitType.Duration == model::not_a_date_time && !days.is_negative()) //活期
 				interest = i.DespoitType.IRPerYear / 360 / 100 * days.days() * i.Currency.Amount;
 			else if (i.Period.contains(now)) continue; //未到计息日
 			else { //已经过了计息日
@@ -45,15 +45,15 @@ namespace controller
 			Record.emplace_back(Account.Number, Account.Name, "现存", model::Currency(acc.Currency.Name, acc.Currency.Code, amount), "");
 		}
 		else {
-			auto now = boost::gregorian::day_clock::local_day();
+			auto now = model::date::day_clock::local_day();
 			auto days = now - acc.LastUpdateDate;
 			if (amount > acc.Currency.Amount) throw std::invalid_argument("Insufficient account balance");
-			if (acc.DespoitType.Duration == boost::date_time::not_a_date_time || !acc.Period.contains(now)) { //活期或已逾期的定期存款
+			if (acc.DespoitType.Duration == model::not_a_date_time || !acc.Period.contains(now)) { //活期或已逾期的定期存款
 				acc.Currency.Amount -= amount;
 				Record.emplace_back(Account.Number, Account.Name, "取现", model::Currency(acc.Currency.Name, acc.Currency.Code, -amount), "");
 			}
 			else { //提前支取
-				 
+
 				acc.Currency.Amount -= amount;
 				amount += DemandRate / 360 / 100 * days.days() * amount;
 
@@ -75,8 +75,8 @@ namespace controller
 	{
 		auto acc = Account.CurrencyAccountList[index];
 		double amount = acc.Currency.Amount;
-		auto now = boost::gregorian::day_clock::local_day();
-		
+		auto now = model::date::day_clock::local_day();
+
 		if (acc.Period.contains(now)) {
 			auto days = now - acc.LastUpdateDate;
 			amount += DemandRate / 360 / 100 * days.days() * amount;

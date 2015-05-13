@@ -9,14 +9,15 @@
 
 #include <iostream>
 #include <string>
-#include <boost\regex.hpp>
-#include <boost\function.hpp>
-#include <boost\log\trivial.hpp>
 #include <initializer_list>
 #include <vector>
 #include <cstdlib>
 #include <exception>
 #include <sstream>
+
+#include <boost\regex.hpp>
+#include <boost\function.hpp>
+#include <boost\log\trivial.hpp>
 
 #ifdef _WIN32
 #define CONV_UTF8_GBK
@@ -103,8 +104,7 @@ namespace CLI
 	template<typename T>
 	void ShowMenu(T& data, std::initializer_list<MenuItem<T>> menu, const string &headline)
 	{
-		BOOST_LOG_TRIVIAL(info) << "Menu Showed";
-		BOOST_LOG_TRIVIAL(info) << "HeadLine is:" << headline;
+		BOOST_LOG_TRIVIAL(info) << "Menu Showed, HeadLine is:" << headline;
 
 		ShowBoxMsg(headline);
 
@@ -114,8 +114,7 @@ namespace CLI
 		for (auto &i : menu) {
 			ShowMsg("[" + std::to_string(++index) + "] : " + i.Name);
 
-			BOOST_LOG_TRIVIAL(debug) << "Item Index:" << index;
-			BOOST_LOG_TRIVIAL(debug) << "Item Name:" << i.Name;
+			BOOST_LOG_TRIVIAL(debug) << "Item Index:" << index << ", Name:" << i.Name;
 		}
 
 		ShowMsg("");

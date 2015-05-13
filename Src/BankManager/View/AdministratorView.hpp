@@ -3,11 +3,13 @@
 //#ifndef ADMINISTRATORVIEW_HPP
 //#define ADMINISTRATORVIEW_HPP
 
-#include "BaseView.hpp"
-#include "..\Controller\DataController.hpp"
-#include "..\Model\UserModel.hpp"
 #include <boost\log\trivial.hpp>
+
+#include "..\Model\UserModel.hpp"
+
+#include "..\Controller\DataController.hpp"
 #include "cli.hpp"
+#include "BaseView.hpp"
 
 namespace view
 {

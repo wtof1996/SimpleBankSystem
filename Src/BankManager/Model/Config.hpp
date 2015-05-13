@@ -1,13 +1,15 @@
 #pragma once
 
-#include "BasicModel.hpp"
-#include "..\Helper.hpp"
-#include <vector>
-#include <string>
-#include <boost\program_options.hpp>
-
 //#ifndef CONFIG_HPP_INCLUDED
 //#define CONFIG_HPP_INCLUDED
+
+#include <vector>
+#include <string>
+
+#include <boost\program_options.hpp>
+
+#include "BasicModel.hpp"
+#include "..\Helper.hpp"
 
 namespace config
 {

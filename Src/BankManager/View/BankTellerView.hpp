@@ -3,10 +3,13 @@
 //#ifndef BANKTELLERVIEW_HPP
 //#define BANKTELLERVIEW_HPP
 
+#include <boost\log\trivial.hpp>
+
 #include "BaseView.hpp"
+
 #include "..\Model\UserModel.hpp"
 #include "..\Controller\DataController.hpp"
-#include <boost\log\trivial.hpp>
+
 
 namespace view
 {
